@@ -29,12 +29,33 @@ st.text('Dry Bulk Freight (Supramax) Interactive Dashboard')
 
 
 #import freight data
+if 'spot' not in st.session_state:
+    st.markdown('# **:red[ERROR]**')
+    st.markdown('## **:red[Please reload data by clicking on the first tab Freight]**')
 spot=st.session_state['spot']
+if 'p4tc' not in st.session_state:
+    st.markdown('# **:red[ERROR]**')
+    st.markdown('## **:red[Please reload data by clicking on the first tab Freight]**')
 p4tc=st.session_state['p4tc']
+if 'p4tc_r' not in st.session_state:
+    st.markdown('# **:red[ERROR]**')
+    st.markdown('## **:red[Please reload data by clicking on the first tab Freight]**')
 p4tc_r=st.session_state['p4tc_r']
+if 'c5tc' not in st.session_state:
+    st.markdown('# **:red[ERROR]**')
+    st.markdown('## **:red[Please reload data by clicking on the first tab Freight]**')
 c5tc=st.session_state['c5tc']
+if 'c5tc_r' not in st.session_state:
+    st.markdown('# **:red[ERROR]**')
+    st.markdown('## **:red[Please reload data by clicking on the first tab Freight]**')
 c5tc_r=st.session_state['c5tc_r']
+if 's10tc' not in st.session_state:
+    st.markdown('# **:red[ERROR]**')
+    st.markdown('## **:red[Please reload data by clicking on the first tab Freight]**')
 s10tc=st.session_state['s10tc']
+if 's10tc_r' not in st.session_state:
+    st.markdown('# **:red[ERROR]**')
+    st.markdown('## **:red[Please reload data by clicking on the first tab Freight]**')
 s10tc_r=st.session_state['s10tc_r']
 
 p4tc_roll=p4tc_r.copy()

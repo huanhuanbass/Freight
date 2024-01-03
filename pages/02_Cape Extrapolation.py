@@ -24,12 +24,18 @@ plot_axis=dict(tickfont = dict(size=15))
 
 
 #import freight data
+if 'spot' not in st.session_state:
+    st.markdown('# **:red[ERROR]**')
+    st.markdown('## **:red[Please reload data by clicking on the first tab Freight]**')
 spot=st.session_state['spot']
 
 spotcape=spot[['C5TC']]
 spotcape.sort_index(inplace=True)
 spotcape.dropna(inplace=True)
 
+if 'c5tc_r' not in st.session_state:
+    st.markdown('# **:red[ERROR]**')
+    st.markdown('## **:red[Please reload data by clicking on the first tab Freight]**')
 ffacape=st.session_state['c5tc_r']
 currmffa=ffacape[['5TC_CCURMON']]
 currmffa.dropna(inplace=True)
