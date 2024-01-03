@@ -21,7 +21,7 @@ plot_title_font_size=25
 plot_legend_font_size=15
 plot_axis=dict(tickfont = dict(size=15))
 
-
+st.text('updated')
 st.title('Baltic Exchange Capesize 5TC')
 st.text('Dry Bulk Freight (Capesize) Interactive Dashboard')
 
@@ -29,13 +29,35 @@ st.text('Dry Bulk Freight (Capesize) Interactive Dashboard')
 
 
 #import freight data
+if 'spot' not in st.session_state:
+    st.markdown('# **ERROR**')
+    st.markdown('## **Please reload data by clicking on the first tab Freight**')
 spot=st.session_state['spot']
+if 'p4tc' not in st.session_state:
+    st.markdown('# **ERROR**')
+    st.markdown('## **Please reload data by clicking on the first tab Freight**')
 p4tc=st.session_state['p4tc']
+if 'p4tc_r' not in st.session_state:
+    st.markdown('# **ERROR**')
+    st.markdown('## **Please reload data by clicking on the first tab Freight**')
 p4tc_r=st.session_state['p4tc_r']
+if 'c5tc' not in st.session_state:
+    st.markdown('# **ERROR**')
+    st.markdown('## **Please reload data by clicking on the first tab Freight**')
 c5tc=st.session_state['c5tc']
+if 'c5tc_r' not in st.session_state:
+    st.markdown('# **ERROR**')
+    st.markdown('## **Please reload data by clicking on the first tab Freight**')
 c5tc_r=st.session_state['c5tc_r']
+if 's10tc' not in st.session_state:
+    st.markdown('# **ERROR**')
+    st.markdown('## **Please reload data by clicking on the first tab Freight**')
 s10tc=st.session_state['s10tc']
+if 's10tc_r' not in st.session_state:
+    st.markdown('# **ERROR**')
+    st.markdown('## **Please reload data by clicking on the first tab Freight**')
 s10tc_r=st.session_state['s10tc_r']
+
 
 p4tc_roll=p4tc_r.copy()
 c5tc_roll=c5tc_r.copy()
