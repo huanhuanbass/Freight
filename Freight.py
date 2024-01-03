@@ -1,5 +1,6 @@
 import streamlit as st
 st.set_page_config(layout="wide")
+st.text('updated')
 
 st.title('Baltic Exchange Dashboard')
 
@@ -25,7 +26,7 @@ st.write('Loading Data...')
 st.text('----Getting Freight Data...')
 
 #Getting Spot Freight Data
-@st.cache_data()
+@st.cache_data(ttl='12h')
 def load_spot_data():
     headers = {'x-apikey': 'FMNNXJKJMSV6PE4YA36EOAAJXX1WAH84KSWNU8PEUFGRHUPJZA3QTG1FLE09SXJF'}
     dateto=pd.to_datetime('today')
@@ -95,7 +96,7 @@ if 'spot' not in st.session_state:
 
 
 #Getting PMX FFA Data
-@st.cache_data()
+@st.cache_data(ttl='12h')
 def load_pmx_ffa_data():
     headers = {'x-apikey': 'FMNNXJKJMSV6PE4YA36EOAAJXX1WAH84KSWNU8PEUFGRHUPJZA3QTG1FLE09SXJF'}
     dateto=pd.to_datetime('today')
@@ -215,7 +216,7 @@ if 'p4tc_r' not in st.session_state:
 
 
 #Getting Cape FFA Data
-@st.cache_data()
+@st.cache_data(ttl='12h')
 def load_cape_ffa_data():
     headers = {'x-apikey': 'FMNNXJKJMSV6PE4YA36EOAAJXX1WAH84KSWNU8PEUFGRHUPJZA3QTG1FLE09SXJF'}
     dateto=pd.to_datetime('today')
@@ -332,7 +333,7 @@ if 'c5tc_r' not in st.session_state:
 
 
 #Getting SMX FFA Data
-@st.cache_data()
+@st.cache_data(ttl='12h')
 def load_smx_ffa_data():
     headers = {'x-apikey': 'FMNNXJKJMSV6PE4YA36EOAAJXX1WAH84KSWNU8PEUFGRHUPJZA3QTG1FLE09SXJF'}
     dateto=pd.to_datetime('today')
