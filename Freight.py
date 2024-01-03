@@ -1,6 +1,6 @@
 import streamlit as st
 st.set_page_config(layout="wide")
-st.text('updated')
+#st.text('updated')
 
 st.title('Baltic Exchange Dashboard')
 
