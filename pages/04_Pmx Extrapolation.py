@@ -25,7 +25,7 @@ plot_axis=dict(tickfont = dict(size=15))
 
 #import freight data
 if 'spot' not in st.session_state:
-    st.markdown('# **:red[！ERROR！]**')
+    st.markdown('# **:red[！ERROR]**')
     st.markdown('## **:red[Please reload data by clicking on the first tab Freight]**')
 spot=st.session_state['spot']
 
@@ -34,7 +34,7 @@ spotpmx.sort_index(inplace=True)
 spotpmx.dropna(inplace=True)
 
 if 'p4tc_r' not in st.session_state:
-    st.markdown('# **:red[！ERROR！]**')
+    st.markdown('# **:red[！ERROR]**')
     st.markdown('## **:red[Please reload data by clicking on the first tab Freight]**')
 ffapmx=st.session_state['p4tc_r']
 currmffa=ffapmx[['4TC_PCURMON']]
