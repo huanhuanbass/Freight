@@ -1,6 +1,6 @@
 import streamlit as st
 st.set_page_config(layout="wide")
-#st.text('updated')
+st.text('updated')
 
 st.title('Baltic Exchange Dashboard')
 
@@ -30,7 +30,7 @@ st.text('----Getting Freight Data...')
 def load_spot_data():
     headers = {'x-apikey': 'FMNNXJKJMSV6PE4YA36EOAAJXX1WAH84KSWNU8PEUFGRHUPJZA3QTG1FLE09SXJF'}
     dateto=pd.to_datetime('today')
-    datefrom=dateto-BDay(10)
+    datefrom=dateto-BDay(15)
     params={'from':datefrom,'to':dateto}
     urlcape='https://api.balticexchange.com/api/v1.3/feed/FDS8Y7DVQJOFDYW6SZUZWMGJCVMEWBLI/data'
     urlpmx='https://api.balticexchange.com/api/v1.3/feed/FDS72H2FOQWJSDTJBVW55HJY1Z6W8ZJ0/data'
@@ -62,12 +62,16 @@ def load_spot_data():
     spotold=spot.set_index('Date')
     spotold.index=pd.to_datetime(spotold.index)
 
+    st.text('Spot Data Before Update: '+str(spotold.index.date[-1]))
+
     spot=pd.concat([spotold,spotnew])
     spot.reset_index(inplace=True)
     spot.rename(columns={'index':'Date'},inplace=True)
     spot=spot.drop_duplicates()
     spot.set_index('Date',inplace=True)
     spot=spot.dropna(subset=['P4TC'])
+
+    st.text('Spot Data After Update: '+str(spot.index.date[-1]))
 
     spot.to_csv('spot.csv',index_label='Date')
 
@@ -100,7 +104,7 @@ if 'spot' not in st.session_state:
 def load_pmx_ffa_data():
     headers = {'x-apikey': 'FMNNXJKJMSV6PE4YA36EOAAJXX1WAH84KSWNU8PEUFGRHUPJZA3QTG1FLE09SXJF'}
     dateto=pd.to_datetime('today')
-    datefrom=dateto-BDay(10)
+    datefrom=dateto-BDay(15)
     params={'from':datefrom,'to':dateto}
     urlpmxffa='https://api.balticexchange.com/api/v1.3/feed/FDSLG4CKMQ0QEYHE8NJ2DTGR2S6N5S7P/data'
 
@@ -130,11 +134,17 @@ def load_pmx_ffa_data():
     p4tcold=pd.read_csv('p4tc.csv')
     p4tcold=p4tcold.set_index('Date')
     p4tcold.index=pd.to_datetime(p4tcold.index)
+
+    st.text('FFA Data Before Update: '+str(p4tcold.index.date[-1]))
+
     p4tc=pd.concat([p4tcold,ffapmx_pt1])
     p4tc.reset_index(inplace=True)
     p4tc.rename(columns={'index':'Date'},inplace=True)
     p4tc=p4tc.drop_duplicates()
     p4tc.set_index('Date',inplace=True)
+
+    st.text('FFA Data After Update: '+str(p4tc.index.date[-1]))
+
     p4tc.to_csv('p4tc.csv',index_label='Date')
 
     ffapmx_pt2=ffapmx_.pivot_table(index='archiveDate',columns='identifier',values='value',aggfunc='mean')
@@ -146,6 +156,7 @@ def load_pmx_ffa_data():
     p4tc_rold=pd.read_csv('p4tc_r.csv')
     p4tc_rold=p4tc_rold.set_index('Date')
     p4tc_rold.index=pd.to_datetime(p4tc_rold.index)
+
     p4tc_r=pd.concat([p4tc_rold,ffapmx_pt2])
     p4tc_r.reset_index(inplace=True)
     p4tc_r.rename(columns={'index':'Date'},inplace=True)
@@ -220,7 +231,7 @@ if 'p4tc_r' not in st.session_state:
 def load_cape_ffa_data():
     headers = {'x-apikey': 'FMNNXJKJMSV6PE4YA36EOAAJXX1WAH84KSWNU8PEUFGRHUPJZA3QTG1FLE09SXJF'}
     dateto=pd.to_datetime('today')
-    datefrom=dateto-BDay(10)
+    datefrom=dateto-BDay(15)
     params={'from':datefrom,'to':dateto}
     urlcapeffa='https://api.balticexchange.com/api/v1.3/feed/FDS2QE6Y0F4LPFOKC4YYVCM38NYVR5DU/data'
 
@@ -337,7 +348,7 @@ if 'c5tc_r' not in st.session_state:
 def load_smx_ffa_data():
     headers = {'x-apikey': 'FMNNXJKJMSV6PE4YA36EOAAJXX1WAH84KSWNU8PEUFGRHUPJZA3QTG1FLE09SXJF'}
     dateto=pd.to_datetime('today')
-    datefrom=dateto-BDay(10)
+    datefrom=dateto-BDay(15)
     params={'from':datefrom,'to':dateto}
     urlsmxffa='https://api.balticexchange.com/api/v1.3/feed/FDSGGYH6236OC931DOFJ7O4RJ0CK0A8B/data'
 
