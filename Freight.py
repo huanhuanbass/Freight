@@ -467,7 +467,7 @@ st.text('Freight Data Done')
 
 st.write('All Data Loaded!!')
 
-#st.button('Update Data',on_click=st.cache_data.clear())
-#st.text('Data is automatically reloaded for potential updates every 12 hours.')
-#st.text('If you would like to trigger the reload now, please click on the above "Update Data" button.')
+st.button('Update Data',on_click=st.cache_data.clear)
+st.text('Data is automatically reloaded for potential updates every 12 hours.')
+st.text('If you would like to trigger the reload now, please click on the above "Update Data" button.')
 
