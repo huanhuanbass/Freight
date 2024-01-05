@@ -314,7 +314,9 @@ elif freq=='Daily':
     spotplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
     spotplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
     spotplot['data'][-1]['line']['width']=5
-    spotplot['data'][-1]['line']['color']='black'
+    spotplot['data'][-1]['line']['color']='red'
+    if len(spotplot['data'])>3:
+        spotplot['data'][2]['line']['color']='black'
     spotplot.update_traces(connectgaps=True)
     spotplot.add_annotation(x=50, y=maxi*10/10,text=str(today.year-1)+' Avg: '+str(int(avgly)),showarrow=False,font=dict(size=18))
     #spotplot.add_annotation(x=50, y=maxi*9/10,text='2022 YTD Avg: '+str(int(avg2022ytd)),showarrow=False,font=dict(size=20))
