@@ -57,9 +57,9 @@ ldspot=spotsmx.iloc[-1,0]
 
 currffa = st.number_input('Insert Current Month FFA',step=50,value=int(ldffa))
 
-bzday=list(pd.bdate_range(date(curryear,currmonth,1),date(curryear,currmonth,calendar.monthrange(curryear, currmonth)[1])))
-
 prvday=list(mtd.index)
+latestday=prvday[-1]
+bzday=list(pd.bdate_range(latestday,date(curryear,currmonth,calendar.monthrange(curryear, currmonth)[1])))
 
 futday=list(set(bzday)-set(prvday))
 
