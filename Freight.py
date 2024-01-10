@@ -175,8 +175,8 @@ def load_pmx_ffa_data():
 
     return p4tc, p4tc_r
 
-p4tc=load_pmx_ffa_data()[0]
-p4tc_r=load_pmx_ffa_data()[1]
+p4tc,p4tc_r=load_pmx_ffa_data()
+
 
 
 
@@ -294,8 +294,8 @@ def load_cape_ffa_data():
 
     return c5tc, c5tc_r
 
-c5tc=load_cape_ffa_data()[0]
-c5tc_r=load_cape_ffa_data()[1]
+c5tc,c5tc_r=load_cape_ffa_data()
+
 
 #Getting Cape FFA Data if API doesn't work
 @st.cache_data()
@@ -411,8 +411,7 @@ def load_smx_ffa_data():
 
     return s10tc, s10tc_r
 
-s10tc=load_smx_ffa_data()[0]
-s10tc_r=load_smx_ffa_data()[1]
+s10tc,s10tc_r=load_smx_ffa_data()
 
 
 
