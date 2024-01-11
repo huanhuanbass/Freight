@@ -260,7 +260,9 @@ if freq=='Weekly':
     c5tc_sp.loc[c5tc_sp[c5tc_sp.index.date==date(2016,1,2)].index,'Week']=0
     c5tc_sp.loc[c5tc_sp[c5tc_sp.index.date==date(2021,1,2)].index,'Week']=0
     c5tc_sp.loc[c5tc_sp[c5tc_sp.index.date==date(2022,1,1)].index,'Week']=0
-    yrsl=st.multiselect('Select Years',options=c5tc_sp['Year'].unique(),default=np.arange(curryear-4,curryear+1),key='spotyear1')
+    yrlist=list(c5tc_sp['Year'].unique())
+    yrlist.sort(reverse=True)
+    yrsl=st.multiselect('Select Years',options=yrlist,default=np.arange(curryear-4,curryear+1),key='spotyear1')
     c5tc_sp=c5tc_sp[c5tc_sp['Year'].isin(yrsl)]
     c5tc_sppt=c5tc_sp.pivot_table(index='Week',columns='Year',values=contractlist_r,aggfunc='mean')
     maxi=c5tc_sppt.max().max()
@@ -278,7 +280,9 @@ if freq=='Weekly':
 elif freq=='Monthly':
     c5tc_sp['Year']=c5tc_sp.index.year
     c5tc_sp['Month']=c5tc_sp.index.month
-    yrsl=st.multiselect('Select Years',options=c5tc_sp['Year'].unique(),default=np.arange(curryear-6,curryear+1),key='spotyear2')
+    yrlist=list(c5tc_sp['Year'].unique())
+    yrlist.sort(reverse=True)
+    yrsl=st.multiselect('Select Years',options=yrlist,default=np.arange(curryear-6,curryear+1),key='spotyear2')
     c5tc_sp=c5tc_sp[c5tc_sp['Year'].isin(yrsl)]
     c5tc_sppt=c5tc_sp.pivot_table(index='Month',columns='Year',values=contractlist_r,aggfunc='mean')
     maxi=c5tc_sppt.max().max()
@@ -296,7 +300,9 @@ elif freq=='Monthly':
 elif freq=='Quarterly':
     c5tc_sp['Year']=c5tc_sp.index.year
     c5tc_sp['Quarter']=c5tc_sp.index.quarter
-    yrsl=st.multiselect('Select Years',options=c5tc_sp['Year'].unique(),default=np.arange(curryear-6,curryear+1),key='spotyear3')
+    yrlist=list(c5tc_sp['Year'].unique())
+    yrlist.sort(reverse=True)
+    yrsl=st.multiselect('Select Years',options=yrlist,default=np.arange(curryear-6,curryear+1),key='spotyear3')
     c5tc_sp=c5tc_sp[c5tc_sp['Year'].isin(yrsl)]
     c5tc_sppt=c5tc_sp.pivot_table(index='Quarter',columns='Year',values=contractlist_r,aggfunc='mean')
     maxi=c5tc_sppt.max().max()
@@ -314,7 +320,9 @@ elif freq=='Quarterly':
 elif freq=='Daily':
     c5tc_sp['Year']=c5tc_sp.index.year
     c5tc_sp['Day']=c5tc_sp.index.day_of_year
-    yrsl=st.multiselect('Select Years',options=c5tc_sp['Year'].unique(),default=np.arange(curryear-3,curryear+1),key='spotyear3')
+    yrlist=list(c5tc_sp['Year'].unique())
+    yrlist.sort(reverse=True)
+    yrsl=st.multiselect('Select Years',options=yrlist,default=np.arange(curryear-3,curryear+1),key='spotyear3')
     c5tc_sp=c5tc_sp[c5tc_sp['Year'].isin(yrsl)]
     c5tc_sppt=c5tc_sp.pivot_table(index='Day',columns='Year',values=contractlist_r,aggfunc='mean')
     maxi=c5tc_sppt.max().max()
@@ -395,7 +403,9 @@ if freq_r=='Weekly':
     c5tc_tsp.loc[c5tc_tsp[c5tc_tsp.index.date==date(2016,1,2)].index,'Week']=0
     c5tc_tsp.loc[c5tc_tsp[c5tc_tsp.index.date==date(2021,1,2)].index,'Week']=0
     c5tc_tsp.loc[c5tc_tsp[c5tc_tsp.index.date==date(2022,1,1)].index,'Week']=0
-    yrsl=st.multiselect('Select Years',options=c5tc_tsp['Year'].unique(),default=np.arange(curryear-4,curryear+1),key='spotyear11')
+    yrlist=list(c5tc_tsp['Year'].unique())
+    yrlist.sort(reverse=True)
+    yrsl=st.multiselect('Select Years',options=yrlist,default=np.arange(curryear-4,curryear+1),key='spotyear11')
     c5tc_tsp=c5tc_tsp[c5tc_tsp['Year'].isin(yrsl)]
     c5tc_sppt=c5tc_tsp.pivot_table(index='Week',columns='Year',values='Spread',aggfunc='mean')
 
@@ -409,7 +419,9 @@ if freq_r=='Weekly':
 elif freq_r=='Monthly':
     c5tc_tsp['Year']=c5tc_tsp.index.year
     c5tc_tsp['Month']=c5tc_tsp.index.month
-    yrsl=st.multiselect('Select Years',options=c5tc_tsp['Year'].unique(),default=np.arange(curryear-6,curryear+1),key='spotyear22')
+    yrlist=list(c5tc_tsp['Year'].unique())
+    yrlist.sort(reverse=True)
+    yrsl=st.multiselect('Select Years',options=yrlist,default=np.arange(curryear-6,curryear+1),key='spotyear22')
     c5tc_tsp=c5tc_tsp[c5tc_tsp['Year'].isin(yrsl)]
     c5tc_sppt=c5tc_tsp.pivot_table(index='Month',columns='Year',values='Spread',aggfunc='mean')
 
@@ -423,7 +435,9 @@ elif freq_r=='Monthly':
 elif freq_r=='Quarterly':
     c5tc_tsp['Year']=c5tc_tsp.index.year
     c5tc_tsp['Quarter']=c5tc_tsp.index.quarter
-    yrsl=st.multiselect('Select Years',options=c5tc_tsp['Year'].unique(),default=np.arange(curryear-6,curryear),key='spotyear33')
+    yrlist=list(c5tc_tsp['Year'].unique())
+    yrlist.sort(reverse=True)
+    yrsl=st.multiselect('Select Years',options=yrlist,default=np.arange(curryear-6,curryear),key='spotyear33')
     c5tc_tsp=c5tc_tsp[c5tc_tsp['Year'].isin(yrsl)]
     c5tc_sppt=c5tc_tsp.pivot_table(index='Quarter',columns='Year',values='Spread',aggfunc='mean')
 
@@ -520,7 +534,9 @@ if freq_r=='Weekly':
     rsp_chart.loc[rsp_chart[rsp_chart.index.date==date(2016,1,2)].index,'Week']=0
     rsp_chart.loc[rsp_chart[rsp_chart.index.date==date(2021,1,2)].index,'Week']=0
     rsp_chart.loc[rsp_chart[rsp_chart.index.date==date(2022,1,1)].index,'Week']=0
-    yrsl=st.multiselect('Select Years',options=rsp_chart['Year'].unique(),default=np.arange(curryear-4,curryear+1),key='spotyear11r')
+    yrlist=list(rsp_chart['Year'].unique())
+    yrlist.sort(reverse=True)
+    yrsl=st.multiselect('Select Years',options=yrlist,default=np.arange(curryear-4,curryear+1),key='spotyear11r')
     rsp_chart=rsp_chart[rsp_chart['Year'].isin(yrsl)]
     p4tc_sppt=rsp_chart.pivot_table(index='Week',columns='Year',values=rsp_sp,aggfunc='mean')
 
@@ -534,7 +550,9 @@ if freq_r=='Weekly':
 elif freq_r=='Monthly':
     rsp_chart['Year']=rsp_chart.index.year
     rsp_chart['Month']=rsp_chart.index.month
-    yrsl=st.multiselect('Select Years',options=rsp_chart['Year'].unique(),default=np.arange(curryear-6,curryear+1),key='spotyear22r')
+    yrlist=list(rsp_chart['Year'].unique())
+    yrlist.sort(reverse=True)
+    yrsl=st.multiselect('Select Years',options=yrlist,default=np.arange(curryear-6,curryear+1),key='spotyear22r')
     rsp_chart=rsp_chart[rsp_chart['Year'].isin(yrsl)]
     p4tc_sppt=rsp_chart.pivot_table(index='Month',columns='Year',values=rsp_sp,aggfunc='mean')
 
@@ -548,7 +566,9 @@ elif freq_r=='Monthly':
 elif freq_r=='Quarterly':
     rsp_chart['Year']=rsp_chart.index.year
     rsp_chart['Quarter']=rsp_chart.index.quarter
-    yrsl=st.multiselect('Select Years',options=rsp_chart['Year'].unique(),default=np.arange(curryear-6,curryear),key='spotyear33r')
+    yrlist=list(rsp_chart['Year'].unique())
+    yrlist.sort(reverse=True)
+    yrsl=st.multiselect('Select Years',options=yrlist,default=np.arange(curryear-6,curryear),key='spotyear33r')
     rsp_chart=rsp_chart[rsp_chart['Year'].isin(yrsl)]
     p4tc_sppt=rsp_chart.pivot_table(index='Quarter',columns='Year',values=rsp_sp,aggfunc='mean')
 
