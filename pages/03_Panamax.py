@@ -382,6 +382,7 @@ p4tc_fctsl=p4tc_fct[sllist3]
 fctplot=px.line(p4tc_fctsl,width=1000,height=500,title='P4TC Forward Curve')
 fctplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 fctplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+fctplot.update_layout(template=draft_template)
 st.plotly_chart(fctplot)
 
 st.markdown('## **Time Spread**')
@@ -532,7 +533,7 @@ for i in ssp1:
 sspplot1=px.line(ssp_chart1,width=1000,height=500,title='Fixed Contract Size Spread: C5TC minus P4TC')
 sspplot1.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 sspplot1.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
-sspplot.update_layout(template=draft_template)
+sspplot1.update_layout(template=draft_template)
 st.plotly_chart(sspplot1)
 
 ssp2=st.multiselect('Choose Contract',options=ssp_opt,default=[m1],key='2012')
