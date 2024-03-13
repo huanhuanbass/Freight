@@ -10,6 +10,25 @@ from pandas.tseries.offsets import BDay
 from ta.volatility import BollingerBands
 from ta.trend import SMAIndicator
 
+import plotly.graph_objects as go
+
+draft_template = go.layout.Template()
+draft_template.layout.annotations = [
+    dict(
+        name="draft watermark",
+        text="COFCO Internal Use Only",
+        textangle=0,
+        opacity=0.1,
+        font=dict(color="black", size=70),
+        xref="paper",
+        yref="paper",
+        x=0.5,
+        y=0.5,
+        showarrow=False,
+    )
+]
+
+
 cutoff = pd.to_datetime('today')
 curryear=cutoff.year
 
@@ -141,6 +160,7 @@ lplot=px.line(s10tc_sl,width=1000,height=500,title='S10TC Spot and Fixed Forward
 lplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 lplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
 lplot.update_traces(connectgaps=True)
+lplot.update_layout(template=draft_template)
 st.plotly_chart(lplot)
 
 st.markdown('#### **----Rolling Contracts**')
@@ -166,6 +186,7 @@ lplot=px.line(s10tc_sl,width=1000,height=500,title='S10TC Spot and Rolling Forwa
 lplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 lplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
 lplot.update_traces(connectgaps=True)
+lplot.update_layout(template=draft_template)
 st.plotly_chart(lplot)
 
 st.markdown('## **Technical Analysis**')
@@ -194,6 +215,7 @@ s10tc_contract['bb_l'] = indicator_bb.bollinger_lband()
 contractplot=px.line(s10tc_contract,width=1000,height=500,title='S10TC Fixed Contract Bollinger Bands and Moving Average')
 contractplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 contractplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+contractplot.update_layout(template=draft_template)
 st.plotly_chart(contractplot)
 
 st.markdown('#### **----Rolling Contracts**')
@@ -233,6 +255,7 @@ s10tc_contract['bb_l'] = indicator_bb.bollinger_lband()
 contractplot=px.line(s10tc_contract,width=1000,height=500,title='S10TC Rolling Contract Bollinger Bands and Moving Average')
 contractplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 contractplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+contractplot.update_layout(template=draft_template)
 st.plotly_chart(contractplot)
 
 st.markdown('## **S10TC Spot and Rolling FFA Contracts Seasonality**')
@@ -267,6 +290,7 @@ if freq=='Weekly':
     #spotplot.add_annotation(x=8, y=maxi*8.5/10,text='2022 YTD Avg: '+str(int(avg2022ytd)),showarrow=False,font=dict(size=20))
     spotplot.add_annotation(x=8, y=maxi*9.2/10,text=str(today.year)+' YTD Avg: '+str(int(avgty)),showarrow=False,font=dict(size=18))
     spotplot.add_annotation(x=8, y=maxi*8.4/10,text='YTD YoY: '+str('{:.1%}'.format(avgty/avglyytd-1)),showarrow=False,font=dict(size=18,color=['red','lightgreen'][avgty/avglyytd-1>0]))
+    spotplot.update_layout(template=draft_template)
     st.plotly_chart(spotplot)
 
 elif freq=='Monthly':
@@ -287,6 +311,7 @@ elif freq=='Monthly':
     #spotplot.add_annotation(x=2.5, y=maxi*9/10,text='2022 YTD Avg: '+str(int(avg2022ytd)),showarrow=False,font=dict(size=20))
     spotplot.add_annotation(x=2.5, y=maxi*9.2/10,text=str(today.year)+' YTD Avg: '+str(int(avgty)),showarrow=False,font=dict(size=18))
     spotplot.add_annotation(x=2.5, y=maxi*8.4/10,text='YTD YoY: '+str('{:.1%}'.format(avgty/avglyytd-1)),showarrow=False,font=dict(size=18,color=['red','lightgreen'][avgty/avglyytd-1>0]))
+    spotplot.update_layout(template=draft_template)
     st.plotly_chart(spotplot)
 
 elif freq=='Quarterly':
@@ -307,6 +332,7 @@ elif freq=='Quarterly':
     #spotplot.add_annotation(x=1.4, y=maxi*9/10,text='2022 YTD Avg: '+str(int(avg2022ytd)),showarrow=False,font=dict(size=20))
     spotplot.add_annotation(x=1.4, y=maxi*9.2/10,text=str(today.year)+' YTD Avg: '+str(int(avgty)),showarrow=False,font=dict(size=18))
     spotplot.add_annotation(x=1.4, y=maxi*8.4/10,text='YTD YoY: '+str('{:.1%}'.format(avgty/avglyytd-1)),showarrow=False,font=dict(size=18,color=['red','lightgreen'][avgty/avglyytd-1>0]))
+    spotplot.update_layout(template=draft_template)
     st.plotly_chart(spotplot)
 
 elif freq=='Daily':
@@ -330,6 +356,7 @@ elif freq=='Daily':
     #spotplot.add_annotation(x=50, y=maxi*9/10,text='2022 YTD Avg: '+str(int(avg2022ytd)),showarrow=False,font=dict(size=20))
     spotplot.add_annotation(x=50, y=maxi*9.2/10,text=str(today.year)+' YTD Avg: '+str(int(avgty)),showarrow=False,font=dict(size=18))
     spotplot.add_annotation(x=50, y=maxi*8.4/10,text='YTD YoY: '+str('{:.1%}'.format(avgty/avglyytd-1)),showarrow=False,font=dict(size=18,color=['red','lightgreen'][avgty/avglyytd-1>0]))
+    spotplot.update_layout(template=draft_template)
     st.plotly_chart(spotplot)
 
 
@@ -359,6 +386,7 @@ s10tc_fctsl=s10tc_fct[sllist3]
 fctplot=px.line(s10tc_fctsl,width=1000,height=500,title='S10TC Forward Curve')
 fctplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 fctplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+fctplot.update_layout(template=draft_template)
 st.plotly_chart(fctplot)
 
 st.markdown('## **Time Spread**')
@@ -373,6 +401,7 @@ if tsp1!=tsp2:
     tspplot=px.line(s10tc_tsp[['Spread']],width=1000,height=500,title='S10TC Fixed Contract Time Spread: '+str(tsp1)+' minus '+str(tsp2))
     tspplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
     tspplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+    tspplot.update_layout(template=draft_template)
     st.plotly_chart(tspplot)
 
 st.markdown('#### **----Rolling Contracts**')
@@ -386,6 +415,7 @@ if tsp1_r!=tsp2_r:
     tspplot=px.line(s10tc_tsp[['Spread']],width=1000,height=500,title='S10TC Rolling Contract Time Spread: '+str(tsp1_r)+' minus '+str(tsp2_r))
     tspplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
     tspplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+    tspplot.update_layout(template=draft_template)
     st.plotly_chart(tspplot)
 
 
@@ -407,6 +437,7 @@ if freq_r=='Weekly':
     spotplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
     spotplot['data'][-1]['line']['width']=5
     spotplot['data'][-1]['line']['color']='black'
+    spotplot.update_layout(template=draft_template)
     st.plotly_chart(spotplot)
 
 elif freq_r=='Monthly':
@@ -423,6 +454,7 @@ elif freq_r=='Monthly':
     spotplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
     spotplot['data'][-1]['line']['width']=5
     spotplot['data'][-1]['line']['color']='black'
+    spotplot.update_layout(template=draft_template)
     st.plotly_chart(spotplot)
 
 elif freq_r=='Quarterly':
@@ -439,6 +471,7 @@ elif freq_r=='Quarterly':
     spotplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
     spotplot['data'][-1]['line']['width']=5
     spotplot['data'][-1]['line']['color']='black'
+    spotplot.update_layout(template=draft_template)
     st.plotly_chart(spotplot)
 
 
@@ -475,6 +508,7 @@ cp_fcssp=pd.merge(p4tc_fcssp,s10tc_fcssp,how='outer',left_index=True,right_index
 fcsspplot=px.line(cp_fcssp,width=1000,height=500,title='S10TC Forward Curve Size Spread')
 fcsspplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 fcsspplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+fcsspplot.update_layout(template=draft_template)
 st.plotly_chart(fcsspplot)
 
 st.markdown('#### **----Fixed Contracts**')
@@ -494,6 +528,7 @@ for j in ssp2:
 sspplot2=px.line(ssp_chart2,width=1000,height=500,title='Fixed Contract Size Spread: P4TC minus S10TC')
 sspplot2.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 sspplot2.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+sspplot2.update_layout(template=draft_template)
 st.plotly_chart(sspplot2)
 
 st.markdown('#### **----Rolling Contracts**')
@@ -520,6 +555,7 @@ rsp_chart[rsp_sp]=rsp_chart[rsp_p]-rsp_chart[rsp_s]
 rspplot=px.line(rsp_chart[rsp_sp],width=1000,height=500,title=str(rsp)+' Rolling Contract Size Spread: P4TC Minus S10TC')
 rspplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 rspplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+rspplot.update_layout(template=draft_template)
 st.plotly_chart(rspplot)
 
 
@@ -541,6 +577,7 @@ if freq_r=='Weekly':
     spotplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
     spotplot['data'][-1]['line']['width']=5
     spotplot['data'][-1]['line']['color']='black'
+    spotplot.update_layout(template=draft_template)
     st.plotly_chart(spotplot)
 
 elif freq_r=='Monthly':
@@ -557,6 +594,7 @@ elif freq_r=='Monthly':
     spotplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
     spotplot['data'][-1]['line']['width']=5
     spotplot['data'][-1]['line']['color']='black'
+    spotplot.update_layout(template=draft_template)
     st.plotly_chart(spotplot)
 
 elif freq_r=='Quarterly':
@@ -573,6 +611,7 @@ elif freq_r=='Quarterly':
     spotplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
     spotplot['data'][-1]['line']['width']=5
     spotplot['data'][-1]['line']['color']='black'
+    spotplot.update_layout(template=draft_template)
     st.plotly_chart(spotplot)
 
 

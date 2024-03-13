@@ -6,6 +6,25 @@ from datetime import date
 import calendar
 st.set_page_config(layout="wide")
 
+import plotly.graph_objects as go
+
+draft_template = go.layout.Template()
+draft_template.layout.annotations = [
+    dict(
+        name="draft watermark",
+        text="COFCO Internal Use Only",
+        textangle=0,
+        opacity=0.1,
+        font=dict(color="black", size=70),
+        xref="paper",
+        yref="paper",
+        x=0.5,
+        y=0.5,
+        showarrow=False,
+    )
+]
+
+
 
 st.title('Panamax P4TC Extrapolation')
 
@@ -97,6 +116,7 @@ mchart=m[['P4TC','Current Month FFA Input','Implied P4TC Average','Simulation']]
 lplot=px.line(mchart,width=1000,height=500,title='P4TC Current Month Extrapolation: From FFA to Spot')
 lplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 lplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+lplot.update_layout(template=draft_template)
 st.plotly_chart(lplot)
 
 st.markdown('##### :blue[Daily Increment in Simulation:]'+' '+str(int(incre)))
@@ -132,6 +152,7 @@ mchart2=m2[['P4TC','Estimated Spot Left','Implied FFA','Simulation']]
 lplot2=px.line(mchart2,width=1000,height=500,title='P4TC Current Month Extrapolation: From Spot to FFA')
 lplot2.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 lplot2.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+lplot2.update_layout(template=draft_template)
 st.plotly_chart(lplot2)
 st.markdown('##### :blue[Daily Increment in Simulation:]'+' '+str(int(incre2)))
 
