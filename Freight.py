@@ -506,7 +506,7 @@ def load_handy_ffa_data():
 
 
 
-    hs7tcold=pd.read_csv('Data/hs7tc.csv')
+    hs7tcold=pd.read_csv('hs7tc.csv')
     hs7tcold=hs7tcold.set_index('Date')
     hs7tcold.index=pd.to_datetime(hs7tcold.index)
     hs7tc=pd.concat([hs7tcold,ffahandy_pt1])  
@@ -523,7 +523,7 @@ def load_handy_ffa_data():
               'TC_H38CURQ','TC_H38+1Q','TC_H38+2Q','TC_H38+3Q','TC_H38+4Q',
               'TC_H38+1CAL','TC_H38+2CAL','TC_H38+3CAL','TC_H38+4CAL','TC_H38+5CAL','TC_H38+6CAL','TC_H38+7CAL']]
 
-    hs7tc_rold=pd.read_csv('Data/hs7tc_r.csv')
+    hs7tc_rold=pd.read_csv('hs7tc_r.csv')
     hs7tc_rold=hs7tc_rold.set_index('Date')
     hs7tc_rold.index=pd.to_datetime(hs7tc_rold.index)
     hs7tc_r=pd.concat([hs7tc_rold,ffahandy_pt2])
