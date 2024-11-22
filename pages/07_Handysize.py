@@ -538,7 +538,7 @@ rsp_chart=pd.merge(hs7tc_roll[rsp_s],s10tc_roll[rsp_p],left_index=True,right_ind
 
 rsp_chart[rsp_sp]=rsp_chart[rsp_p]-rsp_chart[rsp_s]
 
-rspplot=px.line(rsp_chart[rsp_sp],width=1000,height=500,title=str(rsp)+' Rolling Contract Size Spread: P4TC Minus HS7TC')
+rspplot=px.line(rsp_chart[rsp_sp],width=1000,height=500,title=str(rsp)+' Rolling Contract Size Spread: S10TC Minus HS7TC')
 rspplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 rspplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
 rspplot.update_layout(template=draft_template)
