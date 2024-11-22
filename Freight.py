@@ -54,8 +54,15 @@ def load_spot_data():
     spotsmx.set_index('date',inplace=True)
     spotsmx.rename(columns={'value':'S10TC'},inplace=True)
 
+    response = requests.get(urlhandy, headers=headers,params=params)
+    df=pd.DataFrame(response.json())
+    spothandy=pd.DataFrame(df.loc[0,'data'])
+    spothandy.set_index('date',inplace=True)
+    spothandy.rename(columns={'value':'HS7TC'},inplace=True)
+
     spotnew=pd.merge(spotcape,spotpmx,left_index=True,right_index=True,how='outer')
     spotnew=pd.merge(spotnew,spotsmx,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spothandy,left_index=True,right_index=True,how='outer')
     spotnew.index=pd.to_datetime(spotnew.index)
 
     spot=pd.read_csv('spot.csv')
@@ -459,6 +466,96 @@ if 's10tc' not in st.session_state:
     st.session_state['s10tc']=s10tc
 if 's10tc_r' not in st.session_state:
     st.session_state['s10tc_r']=s10tc_r
+
+
+
+
+
+#Getting Handy FFA Data
+@st.cache_data()
+def load_handy_ffa_data():
+    headers = {'x-apikey': 'FMNNXJKJMSV6PE4YA36EOAAJXX1WAH84KSWNU8PEUFGRHUPJZA3QTG1FLE09SXJF'}
+    dateto=pd.to_datetime('today')
+    datefrom=dateto-BDay(15)
+    params={'from':datefrom,'to':dateto}
+    urlhandyffa='https://api.balticexchange.com/api/v1.3/feed/FDSPIQYIH9UUI56BL6U83DUECJNMQKMW/data'
+
+    response = requests.get(urlhandyffa, headers=headers,params=params)
+    df=pd.DataFrame(response.json())
+    ffahandy=pd.DataFrame(df.loc[0,'groupings'])
+
+    ffahandy_=pd.DataFrame()
+    for j in range(len(ffahandy.index)):
+        ffahandy_0=ffahandy.loc[j,'date']
+        ffahandy_n=pd.DataFrame(ffahandy.loc[j,'groups'])
+        for i in range(len(ffahandy_n.index)):
+            ffahandy_n_0=ffahandy_n.loc[i,'periodType']
+            ffahandy_n_n=pd.DataFrame(ffahandy_n.loc[i,'projections'])
+            ffahandy_n_n['periodType']=ffahandy_n_0
+            ffahandy_n_n['date']=ffahandy_0
+            ffahandy_=pd.concat([ffahandy_,ffahandy_n_n])
+            
+    ffahandy_[['Month','Year']]=ffahandy_['period'].str.split(' ',expand=True)
+    ffahandy_['Month'].replace({'Jan':'M1','Feb':'M2','Mar':'M3','Apr':'M4','May':'M5','Jun':'M6',
+                            'Jul':'M7','Aug':'M8','Sep':'M9','Oct':'M10','Nov':'M11','Dec':'M12',
+                            'Feb/Mar':'Q1','May/Jun':'Q2','Aug/Sep':'Q3','Nov/Dec':'Q4','Cal':'Y'},inplace=True)
+    ffahandy_['Contract']='20'+ffahandy_['Year']+'_'+ffahandy_['Month']
+    ffahandy_pt1=ffahandy_.pivot_table(index='archiveDate',columns='Contract',values='value',aggfunc='mean')
+    ffahandy_pt1.index=pd.to_datetime(ffahandy_pt1.index)
+
+
+
+    hs7tcold=pd.read_csv('Data/hs7tc.csv')
+    hs7tcold=hs7tcold.set_index('Date')
+    hs7tcold.index=pd.to_datetime(hs7tcold.index)
+    hs7tc=pd.concat([hs7tcold,ffahandy_pt1])  
+
+    hs7tc.reset_index(inplace=True)
+    hs7tc.rename(columns={'index':'Date'},inplace=True)
+    hs7tc=hs7tc.drop_duplicates()
+    hs7tc.set_index('Date',inplace=True)
+    hs7tc.to_csv('Data/hs7tc.csv',index_label='Date')
+
+    ffahandy_pt2=ffahandy_.pivot_table(index='archiveDate',columns='identifier',values='value',aggfunc='mean')
+    ffahandy_pt2.index=pd.to_datetime(ffahandy_pt2.index)
+    ffahandy_pt2=ffahandy_pt2[['TC_H38CURMON','TC_H38+1MON','TC_H38+2MON','TC_H38+3MON','TC_H38+4MON','TC_H38+5MON', 
+              'TC_H38CURQ','TC_H38+1Q','TC_H38+2Q','TC_H38+3Q','TC_H38+4Q',
+              'TC_H38+1CAL','TC_H38+2CAL','TC_H38+3CAL','TC_H38+4CAL','TC_H38+5CAL','TC_H38+6CAL','TC_H38+7CAL']]
+
+    hs7tc_rold=pd.read_csv('Data/hs7tc_r.csv')
+    hs7tc_rold=hs7tc_rold.set_index('Date')
+    hs7tc_rold.index=pd.to_datetime(hs7tc_rold.index)
+    hs7tc_r=pd.concat([hs7tc_rold,ffahandy_pt2])
+    hs7tc_r.reset_index(inplace=True)
+    hs7tc_r.rename(columns={'index':'Date'},inplace=True)
+    hs7tc_r=hs7tc_r.drop_duplicates()
+    hs7tc_r.set_index('Date',inplace=True)
+    hs7tc_r.to_csv('Data/hs7tc_r.csv',index_label='Date')
+
+    spothandy=spot[['HS7TC']]
+
+    hs7tc=pd.merge(spothandy,hs7tc,left_index=True,right_index=True,how='outer')
+    hs7tc.dropna(subset='HS7TC',inplace=True)
+
+    hs7tc_r=pd.merge(spothandy,hs7tc_r,left_index=True,right_index=True,how='outer')
+    hs7tc_r.dropna(subset='HS7TC',inplace=True)
+
+    return hs7tc, hs7tc_r
+
+hs7tc,hs7tc_r=load_handy_ffa_data()
+
+
+
+if 'hs7tc' not in st.session_state:
+    st.session_state['hs7tc']=hs7tc
+if 'hs7tc_r' not in st.session_state:
+    st.session_state['hs7tc_r']=hs7tc_r
+
+
+
+
+
+
 
 
 st.text('Freight Data Done')
