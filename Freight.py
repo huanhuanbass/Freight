@@ -515,7 +515,7 @@ def load_handy_ffa_data():
     hs7tc.rename(columns={'index':'Date'},inplace=True)
     hs7tc=hs7tc.drop_duplicates()
     hs7tc.set_index('Date',inplace=True)
-    hs7tc.to_csv('Data/hs7tc.csv',index_label='Date')
+    hs7tc.to_csv('hs7tc.csv',index_label='Date')
 
     ffahandy_pt2=ffahandy_.pivot_table(index='archiveDate',columns='identifier',values='value',aggfunc='mean')
     ffahandy_pt2.index=pd.to_datetime(ffahandy_pt2.index)
@@ -531,7 +531,7 @@ def load_handy_ffa_data():
     hs7tc_r.rename(columns={'index':'Date'},inplace=True)
     hs7tc_r=hs7tc_r.drop_duplicates()
     hs7tc_r.set_index('Date',inplace=True)
-    hs7tc_r.to_csv('Data/hs7tc_r.csv',index_label='Date')
+    hs7tc_r.to_csv('hs7tc_r.csv',index_label='Date')
 
     spothandy=spot[['HS7TC']]
 
