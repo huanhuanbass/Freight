@@ -32,7 +32,7 @@ def load_spot_data():
     dateto=pd.to_datetime('today')
     datefrom=dateto-BDay(15)
     params={'from':datefrom,'to':dateto}
-    urlcape='https://api.balticexchange.com/api/v1.3/feed/FDS8Y7DVQJOFDYW6SZUZWMGJCVMEWBLI/data'
+    urlcape='https://api.balticexchange.com/api/v1.3/feed/FDSD9IGORSXSIDGR1DNGEK5AIYDSE90O/data'
     urlpmx='https://api.balticexchange.com/api/v1.3/feed/FDS72H2FOQWJSDTJBVW55HJY1Z6W8ZJ0/data'
     urlsmx='https://api.balticexchange.com/api/v1.3/feed/FDSQZHFHC242QBA1M4OMIW89Q1GBJGCL/data'
     urlhandy='https://api.balticexchange.com/api/v1.3/feed/FDSPMJYK538ET37RIGOY12PFFAXXYUIY/data'
@@ -209,7 +209,7 @@ def load_pmx_ffa_data_backup():
     ffapmx_pt2.index=pd.to_datetime(ffapmx_pt2.index,dayfirst=True)
     ffapmx_pt2.sort_index(inplace=True)
     ffap4tc_pt2=ffapmx_pt2[['4TC_PCURMON','4TC_P+1MON','4TC_P+2MON','4TC_P+3MON','4TC_P+4MON','4TC_P+5MON', 
-              '4TC_PCURQ','4TC_P+1Q','4TC_P+2Q','4TC_P+3Q','4TC_P+4Q','4TC_P+5Q','4TC_P+6Q',
+              '4TC_PCURQ','4TC_P+1Q','4TC_P+2Q','4TC_P+3Q','4TC_P+4Q','4TC_P+5Q',
               '4TC_P+1CAL','4TC_P+2CAL','4TC_P+3CAL','4TC_P+4CAL','4TC_P+5CAL','4TC_P+6CAL','4TC_P+7CAL']]
 
     spotpmx=spot[['P4TC']]
@@ -279,7 +279,7 @@ def load_cape_ffa_data():
     ffacape_pt2=ffacape_.pivot_table(index='archiveDate',columns='identifier',values='value',aggfunc='mean')
     ffacape_pt2.index=pd.to_datetime(ffacape_pt2.index)
     ffacape_pt2=ffacape_pt2[['5TC_CCURMON','5TC_C+1MON','5TC_C+2MON','5TC_C+3MON','5TC_C+4MON','5TC_C+5MON', 
-              '5TC_CCURQ','5TC_C+1Q','5TC_C+2Q','5TC_C+3Q','5TC_C+4Q','5TC_C+5Q','5TC_C+6Q',
+              '5TC_CCURQ','5TC_C+1Q','5TC_C+2Q','5TC_C+3Q','5TC_C+4Q','5TC_C+5Q',
               '5TC_C+1CAL','5TC_C+2CAL','5TC_C+3CAL','5TC_C+4CAL','5TC_C+5CAL','5TC_C+6CAL','5TC_C+7CAL']]
 
     c5tc_rold=pd.read_csv('c5tc_r.csv')
