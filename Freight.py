@@ -33,7 +33,7 @@ def load_spot_data():
     datefrom=dateto-BDay(15)
     params={'from':datefrom,'to':dateto}
     urlcape='https://api.balticexchange.com/api/v1.3/feed/FDSD9IGORSXSIDGR1DNGEK5AIYDSE90O/data'
-    urlpmx='https://api.balticexchange.com/api/v1.3/feed/FDS72H2FOQWJSDTJBVW55HJY1Z6W8ZJ0/data'
+    urlpmx='https://api.balticexchange.com/api/v1.3/feed/FDSUSEGBUEKUX6OE6CW2LFTFSDXFG4KE/data'
     urlsmx='https://api.balticexchange.com/api/v1.3/feed/FDSQZHFHC242QBA1M4OMIW89Q1GBJGCL/data'
     urlhandy='https://api.balticexchange.com/api/v1.3/feed/FDSPMJYK538ET37RIGOY12PFFAXXYUIY/data'
 
@@ -158,7 +158,7 @@ def load_pmx_ffa_data():
     ffapmx_pt2=ffapmx_.pivot_table(index='archiveDate',columns='identifier',values='value',aggfunc='mean')
     ffapmx_pt2.index=pd.to_datetime(ffapmx_pt2.index)
     ffapmx_pt2=ffapmx_pt2[['4TC_PCURMON','4TC_P+1MON','4TC_P+2MON','4TC_P+3MON','4TC_P+4MON','4TC_P+5MON', 
-              '4TC_PCURQ','4TC_P+1Q','4TC_P+2Q','4TC_P+3Q','4TC_P+4Q','4TC_P+5Q','4TC_P+6Q',
+              '4TC_PCURQ','4TC_P+1Q','4TC_P+2Q','4TC_P+3Q','4TC_P+4Q','4TC_P+5Q',
               '4TC_P+1CAL','4TC_P+2CAL','4TC_P+3CAL','4TC_P+4CAL','4TC_P+5CAL','4TC_P+6CAL','4TC_P+7CAL']]
 
     p4tc_rold=pd.read_csv('p4tc_r.csv')
