@@ -58,6 +58,10 @@ s10tc_r=st.session_state['s10tc_r']
 hs7tc=st.session_state['hs7tc']
 hs7tc_r=st.session_state['hs7tc_r']
 
+caperoute=st.session_state['caperoute']
+pmxroute=st.session_state['pmxroute']
+smxroute=st.session_state['smxroute']
+handyroute=st.session_state['handyroute']
 
 p4tc_roll=p4tc_r.copy()
 c5tc_roll=c5tc_r.copy()
@@ -119,6 +123,62 @@ idx2=pd.bdate_range(start='1/1/2015', end=tday)
 hs7tc_pt=hs7tc_pt.reindex(idx,method='bfill')
 hs7tc_pt.sort_index(ascending=False,inplace=True)
 hs7tc_pt.index=hs7tc_pt.index.date
+
+
+st.markdown('## **Spot by Route**')
+route=handyroute.copy()
+
+rangelist=st.selectbox('Select Range',options=['Last Year to Date','Year to Date','Last Week to Date','Month to Date','All'],key='8804')
+sllist=st.multiselect('Select Contracts',options=route.columns,default=['HS7TC','HS1'],key='9904')
+route_sl=route[sllist]
+
+today = pd.to_datetime('today')
+if rangelist=='Last Week to Date':
+    rangestart=today - timedelta(days=today.weekday()) + timedelta(days=6, weeks=-2)
+elif rangelist=='Month to Date':
+    rangestart=date(today.year,today.month,1)
+elif rangelist=='Year to Date':
+    rangestart=date(today.year,1,1)
+elif rangelist=='Last Year to Date':
+    rangestart=date(today.year-1,1,1)
+else:
+    rangestart=date(2014,1,1)
+
+route_sl=route_sl[pd.to_datetime(route_sl.index)>=pd.to_datetime(rangestart)]
+lplot=px.line(route_sl,width=1000,height=500,title='Handysize Routes Line Chart')
+lplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
+lplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+lplot.update_traces(connectgaps=True)
+lplot.update_layout(template=draft_template)
+st.plotly_chart(lplot)
+
+st.markdown('#### **----Ratio of Routes**')
+
+rtr1=st.selectbox('Select Route 1',options=['HS1']+list(route.columns),key='8844')
+rtr2=st.selectbox('Select Route 2',options=list(route.columns),key='8854')
+if rtr1!=rtr2:
+    rtr=route[[rtr1,rtr2]]
+    rtr.dropna(inplace=True)
+    rtr['Ratio']=rtr[rtr1]/rtr[rtr2]
+    rtrplot=px.line(rtr[['Ratio']],width=1000,height=500,title='Handysize Routes Ratio: '+str(rtr1)+' over '+str(rtr2))
+    rtrplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
+    rtrplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+    rtrplot.update_layout(template=draft_template)
+    st.plotly_chart(rtrplot)
+
+st.markdown('#### **----Spread of Routes**')
+
+rtsp1=st.selectbox('Select Route 1',options=['HS1']+list(route.columns),key='8864')
+rtsp2=st.selectbox('Select Route 2',options=list(route.columns),key='8874')
+if rtsp1!=rtsp2:
+    rtsp=route[[rtsp1,rtsp2]]
+    rtsp.dropna(inplace=True)
+    rtsp['Spread']=rtsp[rtsp1]-rtsp[rtsp2]
+    tspplot=px.line(rtsp[['Spread']],width=1000,height=500,title='Handysize Routes Spread: '+str(rtsp1)+' minus '+str(rtsp2))
+    tspplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
+    tspplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+    tspplot.update_layout(template=draft_template)
+    st.plotly_chart(tspplot)
 
 
 

@@ -77,6 +77,10 @@ if 's10tc_r' not in st.session_state:
     st.markdown('## **:red[Please reload data by clicking on the first tab Freight]**')
 s10tc_r=st.session_state['s10tc_r']
 
+caperoute=st.session_state['caperoute']
+pmxroute=st.session_state['pmxroute']
+smxroute=st.session_state['smxroute']
+handyroute=st.session_state['handyroute']
 
 p4tc_roll=p4tc_r.copy()
 c5tc_roll=c5tc_r.copy()
@@ -138,6 +142,62 @@ idx2=pd.bdate_range(start='1/1/2014', end=tday)
 c5tc_pt=c5tc_pt.reindex(idx,method='bfill')
 c5tc_pt.sort_index(ascending=False,inplace=True)
 c5tc_pt.index=c5tc_pt.index.date
+
+st.markdown('## **Spot by Route**')
+route=caperoute.copy()
+
+rangelist=st.selectbox('Select Range',options=['Last Year to Date','Year to Date','Last Week to Date','Month to Date','All'],key='880')
+sllist=st.multiselect('Select Contracts',options=route.columns,default=['C5TC','C3','C5'],key='990')
+route_sl=route[sllist]
+
+today = pd.to_datetime('today')
+if rangelist=='Last Week to Date':
+    rangestart=today - timedelta(days=today.weekday()) + timedelta(days=6, weeks=-2)
+elif rangelist=='Month to Date':
+    rangestart=date(today.year,today.month,1)
+elif rangelist=='Year to Date':
+    rangestart=date(today.year,1,1)
+elif rangelist=='Last Year to Date':
+    rangestart=date(today.year-1,1,1)
+else:
+    rangestart=date(2014,1,1)
+
+route_sl=route_sl[pd.to_datetime(route_sl.index)>=pd.to_datetime(rangestart)]
+lplot=px.line(route_sl,width=1000,height=500,title='Capesize Routes Line Chart')
+lplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
+lplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+lplot.update_traces(connectgaps=True)
+lplot.update_layout(template=draft_template)
+st.plotly_chart(lplot)
+
+st.markdown('#### **----Ratio of Routes**')
+
+rtr1=st.selectbox('Select Route 1',options=['C3']+list(route.columns))
+rtr2=st.selectbox('Select Route 2',options=list(route.columns))
+if rtr1!=rtr2:
+    rtr=route[[rtr1,rtr2]]
+    rtr.dropna(inplace=True)
+    rtr['Ratio']=rtr[rtr1]/rtr[rtr2]
+    tspplot=px.line(rtr[['Ratio']],width=1000,height=500,title='Capesize Routes Ratio: '+str(rtr1)+' over '+str(rtr2))
+    tspplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
+    tspplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+    tspplot.update_layout(template=draft_template)
+    st.plotly_chart(tspplot)
+
+st.markdown('#### **----Spread of Routes**')
+
+rtsp1=st.selectbox('Select Route 1',options=['C3']+list(route.columns),key='882')
+rtsp2=st.selectbox('Select Route 2',options=list(route.columns),key='883')
+if rtsp1!=rtsp2:
+    rtsp=route[[rtsp1,rtsp2]]
+    rtsp.dropna(inplace=True)
+    rtsp['Spread']=rtsp[rtsp1]-rtsp[rtsp2]
+    tspplot=px.line(rtsp[['Spread']],width=1000,height=500,title='Capesize Routes Spread: '+str(rtsp1)+' minus '+str(rtsp2))
+    tspplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
+    tspplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+    tspplot.update_layout(template=draft_template)
+    st.plotly_chart(tspplot)
+
 
 
 st.markdown('## **Spot and Forward Contracts Line Chart**')
