@@ -191,7 +191,7 @@ def load_caperoute_data():
 
     st.text('Capesize Route Data After Update: '+str(spot.index.date[-1]))
 
-    spot.to_csv('Data/caperoute.csv',index_label='Date')
+    spot.to_csv('caperoute.csv',index_label='Date')
 
     return spot
 
@@ -276,7 +276,7 @@ def load_pmxroute_data():
 
     st.text('Panamax Route Data After Update: '+str(spot.index.date[-1]))
 
-    spot.to_csv('Data/pmxroute.csv',index_label='Date')
+    spot.to_csv('pmxroute.csv',index_label='Date')
 
     return spot
 
@@ -375,7 +375,7 @@ def load_smxroute_data():
 
     st.text('Supramax Route Data After Update: '+str(spot.index.date[-1]))
 
-    spot.to_csv('Data/smxroute.csv',index_label='Date')
+    spot.to_csv('smxroute.csv',index_label='Date')
 
     return spot
 
@@ -456,7 +456,7 @@ def load_handyroute_data():
 
     st.text('Handysize Route Data After Update: '+str(spot.index.date[-1]))
 
-    spot.to_csv('Data/handyroute.csv',index_label='Date')
+    spot.to_csv('handyroute.csv',index_label='Date')
     
     return spot
 
