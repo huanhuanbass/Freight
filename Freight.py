@@ -33,7 +33,7 @@ def load_spot_data():
     datefrom=dateto-BDay(15)
     params={'from':datefrom,'to':dateto}
     urlcape='https://api.balticexchange.com/api/v1.3/feed/FDSD9IGORSXSIDGR1DNGEK5AIYDSE90O/data'
-    urlpmx='https://api.balticexchange.com/api/v1.3/feed/FDSUSEGBUEKUX6OE6CW2LFTFSDXFG4KE/data'
+    urlpmx='https://api.balticexchange.com/api/v1.3/feed/FDS72H2FOQWJSDTJBVW55HJY1Z6W8ZJ0/data'
     urlsmx='https://api.balticexchange.com/api/v1.3/feed/FDSQZHFHC242QBA1M4OMIW89Q1GBJGCL/data'
     urlhandy='https://api.balticexchange.com/api/v1.3/feed/FDSPMJYK538ET37RIGOY12PFFAXXYUIY/data'
 
