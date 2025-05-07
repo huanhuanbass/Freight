@@ -32,7 +32,7 @@ def load_spot_data():
     dateto=pd.to_datetime('today')
     datefrom=dateto-BDay(15)
     params={'from':datefrom,'to':dateto}
-    urlcape='https://api.balticexchange.com/api/v1.3/feed/FDSD9IGORSXSIDGR1DNGEK5AIYDSE90O/data'
+    urlcape='https://api.balticexchange.com/api/v1.3/feed/FDS041FOL8AMWM6CHZEXDRAG9P33TT5W/data'
     urlpmx='https://api.balticexchange.com/api/v1.3/feed/FDS72H2FOQWJSDTJBVW55HJY1Z6W8ZJ0/data'
     urlsmx='https://api.balticexchange.com/api/v1.3/feed/FDSQZHFHC242QBA1M4OMIW89Q1GBJGCL/data'
     urlhandy='https://api.balticexchange.com/api/v1.3/feed/FDSPMJYK538ET37RIGOY12PFFAXXYUIY/data'
@@ -113,7 +113,7 @@ def load_caperoute_data():
     dateto=pd.to_datetime('today')
     datefrom=dateto-BDay(15)
     params={'from':datefrom,'to':dateto}
-    urlcape='https://api.balticexchange.com/api/v1.3/feed/FDSD9IGORSXSIDGR1DNGEK5AIYDSE90O/data'
+    urlcape='https://api.balticexchange.com/api/v1.3/feed/FDS041FOL8AMWM6CHZEXDRAG9P33TT5W/data'
     urlcaperoute='https://api.balticexchange.com/api/v1.3/feed/FDSIR2LD7ZH28DVT07YZDO77YD4K5T3J/data'
 
     response = requests.get(urlcape, headers=headers,params=params)
