@@ -177,7 +177,7 @@ def load_caperoute_data():
     spotnew=pd.merge(spotnew,spotc17,left_index=True,right_index=True,how='outer')
     spotnew.index=pd.to_datetime(spotnew.index)
 
-    spot=pd.read_csv('Data/caperoute.csv')
+    spot=pd.read_csv('caperoute.csv')
     spotold=spot.set_index('Date')
     spotold.index=pd.to_datetime(spotold.index)
 
@@ -261,7 +261,7 @@ def load_pmxroute_data():
     spotnew=pd.merge(spotnew,spotp8,left_index=True,right_index=True,how='outer')
     spotnew.index=pd.to_datetime(spotnew.index)
 
-    spot=pd.read_csv('Data/pmxroute.csv')
+    spot=pd.read_csv('pmxroute.csv')
     spotold=spot.set_index('Date')
     spotold.index=pd.to_datetime(spotold.index)
 
@@ -361,7 +361,7 @@ def load_smxroute_data():
     spotnew=pd.merge(spotnew,spots15,left_index=True,right_index=True,how='outer')
     spotnew.index=pd.to_datetime(spotnew.index)
 
-    spot=pd.read_csv('Data/smxroute.csv')
+    spot=pd.read_csv('smxroute.csv')
     spotold=spot.set_index('Date')
     spotold.index=pd.to_datetime(spotold.index)
 
@@ -442,7 +442,7 @@ def load_handyroute_data():
     spotnew=pd.merge(spotnew,spoths7,left_index=True,right_index=True,how='outer')
     spotnew.index=pd.to_datetime(spotnew.index)
 
-    spot=pd.read_csv('Data/handyroute.csv')
+    spot=pd.read_csv('handyroute.csv')
     spotold=spot.set_index('Date')
     spotold.index=pd.to_datetime(spotold.index)
 
