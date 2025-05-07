@@ -106,6 +106,364 @@ if 'spot' not in st.session_state:
     st.session_state['spot']=spot
 
 
+#Getting Capesize Route Data
+@st.cache_data()
+def load_caperoute_data():
+    headers = {'x-apikey': 'FMNNXJKJMSV6PE4YA36EOAAJXX1WAH84KSWNU8PEUFGRHUPJZA3QTG1FLE09SXJF'}
+    dateto=pd.to_datetime('today')
+    datefrom=dateto-BDay(15)
+    params={'from':datefrom,'to':dateto}
+    urlcape='https://api.balticexchange.com/api/v1.3/feed/FDSD9IGORSXSIDGR1DNGEK5AIYDSE90O/data'
+    urlcaperoute='https://api.balticexchange.com/api/v1.3/feed/FDSIR2LD7ZH28DVT07YZDO77YD4K5T3J/data'
+
+    response = requests.get(urlcape, headers=headers,params=params)
+    df=pd.DataFrame(response.json())  
+    spotcape=pd.DataFrame(df.loc[0,'data'])
+    spotcape.set_index('date',inplace=True)
+    spotcape.rename(columns={'value':'C5TC'},inplace=True)
+
+    response = requests.get(urlcaperoute, headers=headers,params=params)
+    df=pd.DataFrame(response.json())
+
+    spotc2=pd.DataFrame(df.loc[0,'data'])
+    spotc2.set_index('date',inplace=True)
+    spotc2.rename(columns={'value':'C2'},inplace=True)
+
+    spotc3=pd.DataFrame(df.loc[1,'data'])
+    spotc3.set_index('date',inplace=True)
+    spotc3.rename(columns={'value':'C3'},inplace=True)
+
+    spotc5=pd.DataFrame(df.loc[2,'data'])
+    spotc5.set_index('date',inplace=True)
+    spotc5.rename(columns={'value':'C5'},inplace=True)
+
+    spotc7=pd.DataFrame(df.loc[3,'data'])
+    spotc7.set_index('date',inplace=True)
+    spotc7.rename(columns={'value':'C7'},inplace=True)
+
+    spotc8=pd.DataFrame(df.loc[4,'data'])
+    spotc8.set_index('date',inplace=True)
+    spotc8.rename(columns={'value':'C8'},inplace=True)
+
+    spotc9=pd.DataFrame(df.loc[5,'data'])
+    spotc9.set_index('date',inplace=True)
+    spotc9.rename(columns={'value':'C9'},inplace=True)
+
+    spotc10=pd.DataFrame(df.loc[6,'data'])
+    spotc10.set_index('date',inplace=True)
+    spotc10.rename(columns={'value':'C10'},inplace=True)
+
+    spotc14=pd.DataFrame(df.loc[7,'data'])
+    spotc14.set_index('date',inplace=True)
+    spotc14.rename(columns={'value':'C14'},inplace=True)
+
+    spotc16=pd.DataFrame(df.loc[8,'data'])
+    spotc16.set_index('date',inplace=True)
+    spotc16.rename(columns={'value':'C16'},inplace=True)
+
+    spotc17=pd.DataFrame(df.loc[9,'data'])
+    spotc17.set_index('date',inplace=True)
+    spotc17.rename(columns={'value':'C17'},inplace=True)
+
+    spotnew=pd.merge(spotcape,spotc2,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotc3,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotc5,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotc7,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotc8,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotc9,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotc10,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotc14,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotc16,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotc17,left_index=True,right_index=True,how='outer')
+    spotnew.index=pd.to_datetime(spotnew.index)
+
+    spot=pd.read_csv('Data/caperoute.csv')
+    spotold=spot.set_index('Date')
+    spotold.index=pd.to_datetime(spotold.index)
+
+    st.text('Capesize Route Data Before Update: '+str(spotold.index.date[-1]))
+
+    spot=pd.concat([spotold,spotnew])
+    spot.reset_index(inplace=True)
+    spot.rename(columns={'index':'Date'},inplace=True)
+    spot=spot.drop_duplicates(subset='Date',keep='last')
+    spot.set_index('Date',inplace=True)
+
+    st.text('Capesize Route Data After Update: '+str(spot.index.date[-1]))
+
+    spot.to_csv('Data/caperoute.csv',index_label='Date')
+
+    return spot
+
+caperoute=load_caperoute_data()
+
+if 'caperoute' not in st.session_state:
+    st.session_state['caperoute']=caperoute
+
+#Getting Panamax Route Data
+@st.cache_data()
+def load_pmxroute_data():
+    headers = {'x-apikey': 'FMNNXJKJMSV6PE4YA36EOAAJXX1WAH84KSWNU8PEUFGRHUPJZA3QTG1FLE09SXJF'}
+    dateto=pd.to_datetime('today')
+    datefrom=dateto-BDay(15)
+    params={'from':datefrom,'to':dateto}
+    urlpmx='https://api.balticexchange.com/api/v1.3/feed/FDS72H2FOQWJSDTJBVW55HJY1Z6W8ZJ0/data'
+    urlpmxroute='https://api.balticexchange.com/api/v1.3/feed/FDSMSBFH191FZVM5NJ4NK51YY6QXCTO7/data'
+
+    response = requests.get(urlpmx, headers=headers,params=params)
+    df=pd.DataFrame(response.json())  
+    spotpmx=pd.DataFrame(df.loc[0,'data'])
+    spotpmx.set_index('date',inplace=True)
+    spotpmx.rename(columns={'value':'P4TC'},inplace=True)
+
+    response = requests.get(urlpmxroute, headers=headers,params=params)
+    df=pd.DataFrame(response.json())
+
+    spotp1a=pd.DataFrame(df.loc[0,'data'])
+    spotp1a.set_index('date',inplace=True)
+    spotp1a.rename(columns={'value':'P1A'},inplace=True)
+
+    spotp2a=pd.DataFrame(df.loc[1,'data'])
+    spotp2a.set_index('date',inplace=True)
+    spotp2a.rename(columns={'value':'P2A'},inplace=True)
+
+    spotp3a=pd.DataFrame(df.loc[2,'data'])
+    spotp3a.set_index('date',inplace=True)
+    spotp3a.rename(columns={'value':'P3A'},inplace=True)
+
+    spotp4=pd.DataFrame(df.loc[3,'data'])
+    spotp4.set_index('date',inplace=True)
+    spotp4.rename(columns={'value':'P4'},inplace=True)
+
+    spotp5=pd.DataFrame(df.loc[4,'data'])
+    spotp5.set_index('date',inplace=True)
+    spotp5.rename(columns={'value':'P5'},inplace=True)
+
+    spotp6=pd.DataFrame(df.loc[5,'data'])
+    spotp6.set_index('date',inplace=True)
+    spotp6.rename(columns={'value':'P6'},inplace=True)
+
+    spotp7=pd.DataFrame(df.loc[6,'data'])
+    spotp7.set_index('date',inplace=True)
+    spotp7.rename(columns={'value':'P7'},inplace=True)
+
+    spotp8=pd.DataFrame(df.loc[7,'data'])
+    spotp8.set_index('date',inplace=True)
+    spotp8.rename(columns={'value':'P8'},inplace=True)
+
+    spotnew=pd.merge(spotpmx,spotp1a,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotp2a,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotp3a,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotp4,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotp5,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotp6,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotp7,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotp8,left_index=True,right_index=True,how='outer')
+    spotnew.index=pd.to_datetime(spotnew.index)
+
+    spot=pd.read_csv('Data/pmxroute.csv')
+    spotold=spot.set_index('Date')
+    spotold.index=pd.to_datetime(spotold.index)
+
+    st.text('Panamax Route Data Before Update: '+str(spotold.index.date[-1]))
+
+    spot=pd.concat([spotold,spotnew])
+    spot.reset_index(inplace=True)
+    spot.rename(columns={'index':'Date'},inplace=True)
+    spot=spot.drop_duplicates(subset='Date',keep='last')
+    spot.set_index('Date',inplace=True)
+    
+
+    st.text('Panamax Route Data After Update: '+str(spot.index.date[-1]))
+
+    spot.to_csv('Data/pmxroute.csv',index_label='Date')
+
+    return spot
+
+pmxroute=load_pmxroute_data()
+
+if 'pmxroute' not in st.session_state:
+    st.session_state['pmxroute']=pmxroute
+
+#Getting Supramax Route Data
+@st.cache_data()
+def load_smxroute_data():
+    headers = {'x-apikey': 'FMNNXJKJMSV6PE4YA36EOAAJXX1WAH84KSWNU8PEUFGRHUPJZA3QTG1FLE09SXJF'}
+    dateto=pd.to_datetime('today')
+    datefrom=dateto-BDay(15)
+    params={'from':datefrom,'to':dateto}
+    urlsmx='https://api.balticexchange.com/api/v1.3/feed/FDSQZHFHC242QBA1M4OMIW89Q1GBJGCL/data'
+    urlsmxroute='https://api.balticexchange.com/api/v1.3/feed/FDSAIN68PQBQM977TO3VCL397UXBVYWV/data'
+
+    response = requests.get(urlsmx, headers=headers,params=params)
+    df=pd.DataFrame(response.json())  
+    spotsmx=pd.DataFrame(df.loc[0,'data'])
+    spotsmx.set_index('date',inplace=True)
+    spotsmx.rename(columns={'value':'S10TC'},inplace=True)
+
+    response = requests.get(urlsmxroute, headers=headers,params=params)
+    df=pd.DataFrame(response.json())
+
+    spots1b=pd.DataFrame(df.loc[0,'data'])
+    spots1b.set_index('date',inplace=True)
+    spots1b.rename(columns={'value':'S1B'},inplace=True)
+
+    spots1c=pd.DataFrame(df.loc[1,'data'])
+    spots1c.set_index('date',inplace=True)
+    spots1c.rename(columns={'value':'S1C'},inplace=True)
+
+    spots2=pd.DataFrame(df.loc[2,'data'])
+    spots2.set_index('date',inplace=True)
+    spots2.rename(columns={'value':'S2'},inplace=True)
+
+    spots3=pd.DataFrame(df.loc[3,'data'])
+    spots3.set_index('date',inplace=True)
+    spots3.rename(columns={'value':'S3'},inplace=True)
+
+    spots4a=pd.DataFrame(df.loc[4,'data'])
+    spots4a.set_index('date',inplace=True)
+    spots4a.rename(columns={'value':'S4A'},inplace=True)
+
+    spots4b=pd.DataFrame(df.loc[5,'data'])
+    spots4b.set_index('date',inplace=True)
+    spots4b.rename(columns={'value':'S4B'},inplace=True)
+
+    spots5=pd.DataFrame(df.loc[6,'data'])
+    spots5.set_index('date',inplace=True)
+    spots5.rename(columns={'value':'S5'},inplace=True)
+
+    spots8=pd.DataFrame(df.loc[7,'data'])
+    spots8.set_index('date',inplace=True)
+    spots8.rename(columns={'value':'S8'},inplace=True)
+
+    spots9=pd.DataFrame(df.loc[8,'data'])
+    spots9.set_index('date',inplace=True)
+    spots9.rename(columns={'value':'S9'},inplace=True)
+
+    spots10=pd.DataFrame(df.loc[9,'data'])
+    spots10.set_index('date',inplace=True)
+    spots10.rename(columns={'value':'S10'},inplace=True)
+
+    spots15=pd.DataFrame(df.loc[10,'data'])
+    spots15.set_index('date',inplace=True)
+    spots15.rename(columns={'value':'S15'},inplace=True)
+
+    spotnew=pd.merge(spotsmx,spots1b,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spots1c,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spots2,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spots3,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spots4a,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spots4b,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spots5,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spots8,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spots9,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spots10,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spots15,left_index=True,right_index=True,how='outer')
+    spotnew.index=pd.to_datetime(spotnew.index)
+
+    spot=pd.read_csv('Data/smxroute.csv')
+    spotold=spot.set_index('Date')
+    spotold.index=pd.to_datetime(spotold.index)
+
+    st.text('Supramax Route Data Before Update: '+str(spotold.index.date[-1]))
+
+    spot=pd.concat([spotold,spotnew])
+    spot.reset_index(inplace=True)
+    spot.rename(columns={'index':'Date'},inplace=True)
+    spot=spot.drop_duplicates(subset='Date',keep='last')
+    spot.set_index('Date',inplace=True)
+
+    st.text('Supramax Route Data After Update: '+str(spot.index.date[-1]))
+
+    spot.to_csv('Data/smxroute.csv',index_label='Date')
+
+    return spot
+
+smxroute=load_smxroute_data()
+
+if 'smxroute' not in st.session_state:
+    st.session_state['smxroute']=smxroute
+
+
+#Getting Handysize Route Data
+@st.cache_data()
+def load_handyroute_data():
+    headers = {'x-apikey': 'FMNNXJKJMSV6PE4YA36EOAAJXX1WAH84KSWNU8PEUFGRHUPJZA3QTG1FLE09SXJF'}
+    dateto=pd.to_datetime('today')
+    datefrom=dateto-BDay(15)
+    params={'from':datefrom,'to':dateto}
+    urlhandy='https://api.balticexchange.com/api/v1.3/feed/FDSPMJYK538ET37RIGOY12PFFAXXYUIY/data'
+    urlhandyroute='https://api.balticexchange.com/api/v1.3/feed/FDSREHV3FRHP773368630ERWCAIU7CX0/data'
+
+    response = requests.get(urlhandy, headers=headers,params=params)
+    df=pd.DataFrame(response.json())  
+    spothandy=pd.DataFrame(df.loc[0,'data'])
+    spothandy.set_index('date',inplace=True)
+    spothandy.rename(columns={'value':'HS7TC'},inplace=True)
+
+    response = requests.get(urlhandyroute, headers=headers,params=params)
+    df=pd.DataFrame(response.json())
+
+    spoths1=pd.DataFrame(df.loc[0,'data'])
+    spoths1.set_index('date',inplace=True)
+    spoths1.rename(columns={'value':'HS1'},inplace=True)
+
+    spoths2=pd.DataFrame(df.loc[1,'data'])
+    spoths2.set_index('date',inplace=True)
+    spoths2.rename(columns={'value':'HS2'},inplace=True)
+
+    spoths3=pd.DataFrame(df.loc[2,'data'])
+    spoths3.set_index('date',inplace=True)
+    spoths3.rename(columns={'value':'HS3'},inplace=True)
+
+    spoths4=pd.DataFrame(df.loc[3,'data'])
+    spoths4.set_index('date',inplace=True)
+    spoths4.rename(columns={'value':'HS4'},inplace=True)
+
+    spoths5=pd.DataFrame(df.loc[4,'data'])
+    spoths5.set_index('date',inplace=True)
+    spoths5.rename(columns={'value':'HS5'},inplace=True)
+
+    spoths6=pd.DataFrame(df.loc[5,'data'])
+    spoths6.set_index('date',inplace=True)
+    spoths6.rename(columns={'value':'HS6'},inplace=True)
+
+    spoths7=pd.DataFrame(df.loc[6,'data'])
+    spoths7.set_index('date',inplace=True)
+    spoths7.rename(columns={'value':'HS7'},inplace=True)
+
+
+    spotnew=pd.merge(spothandy,spoths1,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spoths2,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spoths3,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spoths4,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spoths5,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spoths6,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spoths7,left_index=True,right_index=True,how='outer')
+    spotnew.index=pd.to_datetime(spotnew.index)
+
+    spot=pd.read_csv('Data/handyroute.csv')
+    spotold=spot.set_index('Date')
+    spotold.index=pd.to_datetime(spotold.index)
+
+    st.text('Handysize Route Data Before Update: '+str(spotold.index.date[-1]))
+
+    spot=pd.concat([spotold,spotnew])
+    spot.reset_index(inplace=True)
+    spot.rename(columns={'index':'Date'},inplace=True)
+    spot=spot.drop_duplicates(subset='Date',keep='last')
+    spot.set_index('Date',inplace=True)
+
+    st.text('Handysize Route Data After Update: '+str(spot.index.date[-1]))
+
+    spot.to_csv('Data/handyroute.csv',index_label='Date')
+    
+    return spot
+
+handyroute=load_handyroute_data()
+
+if 'handyroute' not in st.session_state:
+    st.session_state['handyroute']=handyroute
 
 #Getting PMX FFA Data
 #@st.cache_data(ttl='12h')
