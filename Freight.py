@@ -293,6 +293,7 @@ def load_smxroute_data():
     datefrom=dateto-BDay(15)
     params={'from':datefrom,'to':dateto}
     urlsmx='https://api.balticexchange.com/api/v1.3/feed/FDSQZHFHC242QBA1M4OMIW89Q1GBJGCL/data'
+    urlsmx11='https://api.balticexchange.com/api/v1.3/feed/FDS9DM57YZN3GFGRUBDLPDSR88RL18I8/data'
     urlsmxroute='https://api.balticexchange.com/api/v1.3/feed/FDSAIN68PQBQM977TO3VCL397UXBVYWV/data'
 
     response = requests.get(urlsmx, headers=headers,params=params)
@@ -300,6 +301,12 @@ def load_smxroute_data():
     spotsmx=pd.DataFrame(df.loc[0,'data'])
     spotsmx.set_index('date',inplace=True)
     spotsmx.rename(columns={'value':'S10TC'},inplace=True)
+
+    response = requests.get(urlsmx11, headers=headers,params=params)
+    df=pd.DataFrame(response.json())  
+    spotsmx11=pd.DataFrame(df.loc[0,'data'])
+    spotsmx11.set_index('date',inplace=True)
+    spotsmx11.rename(columns={'value':'S11TC'},inplace=True)
 
     response = requests.get(urlsmxroute, headers=headers,params=params)
     df=pd.DataFrame(response.json())
@@ -359,6 +366,7 @@ def load_smxroute_data():
     spotnew=pd.merge(spotnew,spots9,left_index=True,right_index=True,how='outer')
     spotnew=pd.merge(spotnew,spots10,left_index=True,right_index=True,how='outer')
     spotnew=pd.merge(spotnew,spots15,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotsmx11,left_index=True,right_index=True,how='outer')
     spotnew.index=pd.to_datetime(spotnew.index)
 
     spot=pd.read_csv('smxroute.csv')
