@@ -32,7 +32,7 @@ def load_spot_data():
     dateto=pd.to_datetime('today')
     datefrom=dateto-BDay(15)
     params={'from':datefrom,'to':dateto}
-    urlcape='https://api.balticexchange.com/api/v1.3/feed/FDS041FOL8AMWM6CHZEXDRAG9P33TT5W/data'
+    urlcape='https://api.balticexchange.com/api/v1.3/feed/FDS2LK1T0Q6I3PQEGFVJTIM7AB4PE1O1/data'
     urlpmx='https://api.balticexchange.com/api/v1.3/feed/FDS72H2FOQWJSDTJBVW55HJY1Z6W8ZJ0/data'
     urlsmx='https://api.balticexchange.com/api/v1.3/feed/FDSQZHFHC242QBA1M4OMIW89Q1GBJGCL/data'
     urlhandy='https://api.balticexchange.com/api/v1.3/feed/FDSPMJYK538ET37RIGOY12PFFAXXYUIY/data'
@@ -113,7 +113,7 @@ def load_caperoute_data():
     dateto=pd.to_datetime('today')
     datefrom=dateto-BDay(15)
     params={'from':datefrom,'to':dateto}
-    urlcape='https://api.balticexchange.com/api/v1.3/feed/FDS041FOL8AMWM6CHZEXDRAG9P33TT5W/data'
+    urlcape='https://api.balticexchange.com/api/v1.3/feed/FDS2LK1T0Q6I3PQEGFVJTIM7AB4PE1O1/data'
     urlcaperoute='https://api.balticexchange.com/api/v1.3/feed/FDSIR2LD7ZH28DVT07YZDO77YD4K5T3J/data'
 
     response = requests.get(urlcape, headers=headers,params=params)
@@ -141,26 +141,6 @@ def load_caperoute_data():
     spotc7.set_index('date',inplace=True)
     spotc7.rename(columns={'value':'C7'},inplace=True)
 
-    spotc8=pd.DataFrame(df.loc[4,'data'])
-    spotc8.set_index('date',inplace=True)
-    spotc8.rename(columns={'value':'C8'},inplace=True)
-
-    spotc9=pd.DataFrame(df.loc[5,'data'])
-    spotc9.set_index('date',inplace=True)
-    spotc9.rename(columns={'value':'C9'},inplace=True)
-
-    spotc10=pd.DataFrame(df.loc[6,'data'])
-    spotc10.set_index('date',inplace=True)
-    spotc10.rename(columns={'value':'C10'},inplace=True)
-
-    spotc14=pd.DataFrame(df.loc[7,'data'])
-    spotc14.set_index('date',inplace=True)
-    spotc14.rename(columns={'value':'C14'},inplace=True)
-
-    spotc16=pd.DataFrame(df.loc[8,'data'])
-    spotc16.set_index('date',inplace=True)
-    spotc16.rename(columns={'value':'C16'},inplace=True)
-
     spotc17=pd.DataFrame(df.loc[9,'data'])
     spotc17.set_index('date',inplace=True)
     spotc17.rename(columns={'value':'C17'},inplace=True)
@@ -169,11 +149,6 @@ def load_caperoute_data():
     spotnew=pd.merge(spotnew,spotc3,left_index=True,right_index=True,how='outer')
     spotnew=pd.merge(spotnew,spotc5,left_index=True,right_index=True,how='outer')
     spotnew=pd.merge(spotnew,spotc7,left_index=True,right_index=True,how='outer')
-    spotnew=pd.merge(spotnew,spotc8,left_index=True,right_index=True,how='outer')
-    spotnew=pd.merge(spotnew,spotc9,left_index=True,right_index=True,how='outer')
-    spotnew=pd.merge(spotnew,spotc10,left_index=True,right_index=True,how='outer')
-    spotnew=pd.merge(spotnew,spotc14,left_index=True,right_index=True,how='outer')
-    spotnew=pd.merge(spotnew,spotc16,left_index=True,right_index=True,how='outer')
     spotnew=pd.merge(spotnew,spotc17,left_index=True,right_index=True,how='outer')
     spotnew.index=pd.to_datetime(spotnew.index)
 
