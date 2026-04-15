@@ -552,7 +552,7 @@ p4tc_pt.sort_index(ascending=False,inplace=True)
 p4tc_pt.index=p4tc_pt.index.date
 
 c5tc_pt.rename(columns={'C5TC':'Spot'},inplace=True)
-p4tc_pt.rename(columns={'P4TC':'Spot'},inplace=True)
+p4tc_pt.rename(columns={'P5TC':'Spot'},inplace=True)
 
 ssp_opt=list(set(p4tc_pt.columns)&set(c5tc_pt.columns))
 ssp_opt.sort()
@@ -599,7 +599,7 @@ st.plotly_chart(sspplot)
 
 st.markdown('#### **----Rolling Contracts**')
 
-p4tc_roll.rename(columns={'P4TC':'4TC_PSpot'},inplace=True)
+p4tc_roll.rename(columns={'P5TC':'5TC_PSpot'},inplace=True)
 c5tc_roll.rename(columns={'C5TC':'5TC_CSpot'},inplace=True)
 
 rsp_opt=pd.Series(p4tc_roll.columns.values)
@@ -609,7 +609,7 @@ rsp_opt=rsp_opt.str.removeprefix('4TC_P')
 rsp=st.selectbox('Choose Contract',options=['+1MON']+list(rsp_opt),key='300')
 
 rsp_c='5TC_C'+rsp
-rsp_p='4TC_P'+rsp
+rsp_p='5TC_P'+rsp
 rsp_sp=rsp+' Spread'
 
 rsp_chart=pd.merge(c5tc_roll[rsp_c],p4tc_roll[rsp_p],left_index=True,right_index=True,how='inner')
