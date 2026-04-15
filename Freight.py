@@ -33,7 +33,7 @@ def load_spot_data():
     datefrom=dateto-BDay(15)
     params={'from':datefrom,'to':dateto}
     urlcape='https://api.balticexchange.com/api/v1.3/feed/FDS2LK1T0Q6I3PQEGFVJTIM7AB4PE1O1/data'
-    urlpmx='https://api.balticexchange.com/api/v1.3/feed/FDS72H2FOQWJSDTJBVW55HJY1Z6W8ZJ0/data'
+    urlpmx='https://api.balticexchange.com/api/v1.3/feed/FDS8ULWYAGKEPT0K313QXQRBFOK1JRV7/data'
     urlsmx='https://api.balticexchange.com/api/v1.3/feed/FDSQZHFHC242QBA1M4OMIW89Q1GBJGCL/data'
     urlhandy='https://api.balticexchange.com/api/v1.3/feed/FDSPMJYK538ET37RIGOY12PFFAXXYUIY/data'
 
@@ -141,6 +141,26 @@ def load_caperoute_data():
     spotc7.set_index('date',inplace=True)
     spotc7.rename(columns={'value':'C7'},inplace=True)
 
+    spotc8=pd.DataFrame(df.loc[4,'data'])
+    spotc8.set_index('date',inplace=True)
+    spotc8.rename(columns={'value':'C8'},inplace=True)
+
+    spotc9=pd.DataFrame(df.loc[5,'data'])
+    spotc9.set_index('date',inplace=True)
+    spotc9.rename(columns={'value':'C9'},inplace=True)
+
+    spotc10=pd.DataFrame(df.loc[6,'data'])
+    spotc10.set_index('date',inplace=True)
+    spotc10.rename(columns={'value':'C10'},inplace=True)
+
+    spotc14=pd.DataFrame(df.loc[7,'data'])
+    spotc14.set_index('date',inplace=True)
+    spotc14.rename(columns={'value':'C14'},inplace=True)
+
+    spotc16=pd.DataFrame(df.loc[8,'data'])
+    spotc16.set_index('date',inplace=True)
+    spotc16.rename(columns={'value':'C16'},inplace=True)
+
     spotc17=pd.DataFrame(df.loc[9,'data'])
     spotc17.set_index('date',inplace=True)
     spotc17.rename(columns={'value':'C17'},inplace=True)
@@ -149,6 +169,11 @@ def load_caperoute_data():
     spotnew=pd.merge(spotnew,spotc3,left_index=True,right_index=True,how='outer')
     spotnew=pd.merge(spotnew,spotc5,left_index=True,right_index=True,how='outer')
     spotnew=pd.merge(spotnew,spotc7,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotc8,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotc9,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotc10,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotc14,left_index=True,right_index=True,how='outer')
+    spotnew=pd.merge(spotnew,spotc16,left_index=True,right_index=True,how='outer')
     spotnew=pd.merge(spotnew,spotc17,left_index=True,right_index=True,how='outer')
     spotnew.index=pd.to_datetime(spotnew.index)
 
@@ -182,7 +207,7 @@ def load_pmxroute_data():
     dateto=pd.to_datetime('today')
     datefrom=dateto-BDay(15)
     params={'from':datefrom,'to':dateto}
-    urlpmx='https://api.balticexchange.com/api/v1.3/feed/FDS72H2FOQWJSDTJBVW55HJY1Z6W8ZJ0/data'
+    urlpmx='https://api.balticexchange.com/api/v1.3/feed/FDS8ULWYAGKEPT0K313QXQRBFOK1JRV7/data'
     urlpmxroute='https://api.balticexchange.com/api/v1.3/feed/FDSMSBFH191FZVM5NJ4NK51YY6QXCTO7/data'
 
     response = requests.get(urlpmx, headers=headers,params=params)
@@ -455,7 +480,7 @@ def load_pmx_ffa_data():
     dateto=pd.to_datetime('today')
     datefrom=dateto-BDay(15)
     params={'from':datefrom,'to':dateto}
-    urlpmxffa='https://api.balticexchange.com/api/v1.3/feed/FDSLG4CKMQ0QEYHE8NJ2DTGR2S6N5S7P/data'
+    urlpmxffa='https://api.balticexchange.com/api/v1.3/feed/FDS5OTUNG68AJVM81KDQOZF9IL1237CH/data'
 
     response = requests.get(urlpmxffa, headers=headers,params=params)
     df=pd.DataFrame(response.json())
@@ -480,7 +505,7 @@ def load_pmx_ffa_data():
     ffapmx_pt1=ffapmx_.pivot_table(index='archiveDate',columns='Contract',values='value',aggfunc='mean')
     ffapmx_pt1.index=pd.to_datetime(ffapmx_pt1.index)
 
-    p4tcold=pd.read_csv('p4tc.csv')
+    p4tcold=pd.read_csv('p5tc.csv')
     p4tcold=p4tcold.set_index('Date')
     p4tcold.index=pd.to_datetime(p4tcold.index)
 
@@ -494,15 +519,15 @@ def load_pmx_ffa_data():
 
     st.text('FFA Data After Update: '+str(p4tc.index.date[-1]))
 
-    p4tc.to_csv('p4tc.csv',index_label='Date')
+    p4tc.to_csv('p5tc.csv',index_label='Date')
 
     ffapmx_pt2=ffapmx_.pivot_table(index='archiveDate',columns='identifier',values='value',aggfunc='mean')
     ffapmx_pt2.index=pd.to_datetime(ffapmx_pt2.index)
-    ffapmx_pt2=ffapmx_pt2[['4TC_PCURMON','4TC_P+1MON','4TC_P+2MON','4TC_P+3MON','4TC_P+4MON','4TC_P+5MON', 
-              '4TC_PCURQ','4TC_P+1Q','4TC_P+2Q','4TC_P+3Q','4TC_P+4Q','4TC_P+5Q',
-              '4TC_P+1CAL','4TC_P+2CAL','4TC_P+3CAL','4TC_P+4CAL','4TC_P+5CAL','4TC_P+6CAL','4TC_P+7CAL']]
+    ffapmx_pt2=ffapmx_pt2[['5TC_PCURMON','5TC_P+1MON','5TC_P+2MON','5TC_P+3MON','5TC_P+4MON','5TC_P+5MON', 
+              '5TC_PCURQ','5TC_P+1Q','5TC_P+2Q','5TC_P+3Q','5TC_P+4Q','5TC_P+5Q',
+              '5TC_P+1CAL','5TC_P+2CAL','5TC_P+3CAL','5TC_P+4CAL','5TC_P+5CAL','5TC_P+6CAL','5TC_P+7CAL']]
 
-    p4tc_rold=pd.read_csv('p4tc_r.csv')
+    p4tc_rold=pd.read_csv('p5tc_r.csv')
     p4tc_rold=p4tc_rold.set_index('Date')
     p4tc_rold.index=pd.to_datetime(p4tc_rold.index)
 
@@ -511,16 +536,16 @@ def load_pmx_ffa_data():
     p4tc_r.rename(columns={'index':'Date'},inplace=True)
     p4tc_r=p4tc_r.drop_duplicates()
     p4tc_r.set_index('Date',inplace=True)
-    p4tc_r.to_csv('p4tc_r.csv',index_label='Date')
+    p4tc_r.to_csv('p5tc_r.csv',index_label='Date')
 
-    spotpmx=spot[['P4TC']]
+    spotpmx=spot[['P5TC']]
 
     p4tc=pd.merge(spotpmx,p4tc,left_index=True,right_index=True,how='outer')
 
-    p4tc.dropna(subset='P4TC',inplace=True)
+    p4tc.dropna(subset='P5TC',inplace=True)
 
     p4tc_r=pd.merge(spotpmx,p4tc_r,left_index=True,right_index=True,how='outer')
-    p4tc_r.dropna(subset='P4TC',inplace=True)
+    p4tc_r.dropna(subset='P5TC',inplace=True)
 
     return p4tc, p4tc_r
 
