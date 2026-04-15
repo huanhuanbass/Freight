@@ -47,7 +47,7 @@ def load_spot_data():
     df=pd.DataFrame(response.json())
     spotpmx=pd.DataFrame(df.loc[0,'data'])
     spotpmx.set_index('date',inplace=True)
-    spotpmx.rename(columns={'value':'P4TC'},inplace=True)
+    spotpmx.rename(columns={'value':'P5TC'},inplace=True)
 
     response = requests.get(urlsmx, headers=headers,params=params)
     df=pd.DataFrame(response.json())
@@ -77,7 +77,7 @@ def load_spot_data():
     spot.rename(columns={'index':'Date'},inplace=True)
     spot=spot.drop_duplicates()
     spot.set_index('Date',inplace=True)
-    spot=spot.dropna(subset=['P4TC'])
+    spot=spot.dropna(subset=['P5TC'])
 
     st.text('Spot Data After Update: '+str(spot.index.date[-1]))
 
