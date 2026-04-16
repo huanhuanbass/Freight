@@ -26,7 +26,7 @@ draft_template.layout.annotations = [
 
 
 
-st.title('Panamax P4TC Extrapolation')
+st.title('Panamax P5TC Extrapolation')
 
 cutoff = pd.to_datetime('today')
 curryear=cutoff.year
@@ -48,7 +48,7 @@ if 'spot' not in st.session_state:
     st.markdown('## **:red[Please reload data by clicking on the first tab Freight]**')
 spot=st.session_state['spot']
 
-spotpmx=spot[['P4TC']]
+spotpmx=spot[['P5TC']]
 spotpmx.sort_index(inplace=True)
 spotpmx.dropna(inplace=True)
 
@@ -56,11 +56,11 @@ if 'p4tc_r' not in st.session_state:
     st.markdown('# **:red[！ERROR]**')
     st.markdown('## **:red[Please reload data by clicking on the first tab Freight]**')
 ffapmx=st.session_state['p4tc_r']
-currmffa=ffapmx[['4TC_PCURMON']]
+currmffa=ffapmx[['5TC_PCURMON']]
 currmffa.dropna(inplace=True)
 currmffa.index=pd.to_datetime(currmffa.index)
 currmffa.sort_index(inplace=True)
-ldffa=currmffa['4TC_PCURMON'][-1]
+ldffa=currmffa['5TC_PCURMON'][-1]
 
 st.markdown('## **Current Month Extrapolation**')
 st.markdown('#### **----Extrapolation from FFA to Spot**')
@@ -70,7 +70,7 @@ spotpmx['Quarter']=spotpmx.index.quarter
 spotpmx['Month']=spotpmx.index.month
 
 mtd=spotpmx[(spotpmx['Year']==curryear) & (spotpmx['Month']==currmonth)]
-mtdavg=mtd['P4TC'].mean()
+mtdavg=mtd['P5TC'].mean()
 ldspot=spotpmx.iloc[-1,0]
 
 
@@ -96,7 +96,7 @@ st.write(mdf.style.format('{:,.0f}'))
 
 incre=2*(extpl-ldspot)/(1+dfut)
 
-mrest=pd.DataFrame(data={'Date':futday,'Implied P4TC Average':extpl})
+mrest=pd.DataFrame(data={'Date':futday,'Implied P5TC Average':extpl})
 mrest.set_index('Date',inplace=True)
 mrest.sort_index(inplace=True)
 mrest['Year']=mrest.index.year
@@ -111,9 +111,9 @@ mrest['Simulation']=ldspot+mrest['Row']*incre
 m=pd.concat([mtd,mrest])
 m['Current Month FFA Input']=currffa
 
-mchart=m[['P4TC','Current Month FFA Input','Implied P4TC Average','Simulation']]
+mchart=m[['P5TC','Current Month FFA Input','Implied P5TC Average','Simulation']]
 
-lplot=px.line(mchart,width=1000,height=500,title='P4TC Current Month Extrapolation: From FFA to Spot')
+lplot=px.line(mchart,width=1000,height=500,title='P5TC Current Month Extrapolation: From FFA to Spot')
 lplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 lplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
 lplot.update_layout(template=draft_template)
@@ -147,7 +147,7 @@ mrest2['Simulation']=ldspot+mrest2['Row']*incre2
 
 m2=pd.concat([mtd,mrest2])
 m2['Implied FFA']=impffa
-mchart2=m2[['P4TC','Estimated Spot Left','Implied FFA','Simulation']]
+mchart2=m2[['P5TC','Estimated Spot Left','Implied FFA','Simulation']]
 
 lplot2=px.line(mchart2,width=1000,height=500,title='P4TC Current Month Extrapolation: From Spot to FFA')
 lplot2.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
