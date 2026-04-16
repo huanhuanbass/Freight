@@ -102,7 +102,7 @@ l2month=tday-BDay(45)
 
 
 
-s0='P4TC'
+s0='P5TC'
 m0=str(tday.year)+'_M'+str(tday.month)
 q0=str(tday.year)+'_Q'+str(tday.quarter)
 y0=str(tday.year)+'_Y'
@@ -212,7 +212,7 @@ else:
     rangestart1=date(1998,1,1)
 
 p4tc_sl=p4tc_sl[pd.to_datetime(p4tc_sl.index)>=pd.to_datetime(rangestart1)]
-lplot=px.line(p4tc_sl,width=1000,height=500,title='P4TC Spot and Fixed Forward Contracts Historical Price')
+lplot=px.line(p4tc_sl,width=1000,height=500,title='P5TC Spot and Fixed Forward Contracts Historical Price')
 lplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 lplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
 lplot.update_traces(connectgaps=True)
@@ -270,7 +270,7 @@ p4tc_contract['bb_h'] = indicator_bb.bollinger_hband()
 p4tc_contract['bb_l'] = indicator_bb.bollinger_lband()
 
 
-contractplot=px.line(p4tc_contract,width=1000,height=500,title='P4TC Fixed Contract Bollinger Bands and Moving Average')
+contractplot=px.line(p4tc_contract,width=1000,height=500,title='P5TC Fixed Contract Bollinger Bands and Moving Average')
 contractplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 contractplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
 contractplot.update_layout(template=draft_template)
@@ -632,7 +632,7 @@ rsp_chart=pd.merge(c5tc_roll[rsp_c],p4tc_roll[rsp_p],left_index=True,right_index
 
 rsp_chart[rsp_sp]=rsp_chart[rsp_c]-rsp_chart[rsp_p]
 
-rspplot=px.line(rsp_chart[rsp_sp],width=1000,height=500,title=str(rsp)+' Rolling Contract Size Spread: C5TC Minus P4TC')
+rspplot=px.line(rsp_chart[rsp_sp],width=1000,height=500,title=str(rsp)+' Rolling Contract Size Spread: C5TC Minus P5TC')
 rspplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 rspplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
 rspplot.update_layout(template=draft_template)
@@ -669,7 +669,7 @@ elif freq_r=='Monthly':
     rsp_chart=rsp_chart[rsp_chart['Year'].isin(yrsl)]
     p4tc_sppt=rsp_chart.pivot_table(index='Month',columns='Year',values=rsp_sp,aggfunc='mean')
 
-    spotplot=px.line(p4tc_sppt,width=1000,height=500,title=str(rsp)+' Rolling Contract C5TC Minus P4TC Size Spread Monthly Seasonality')
+    spotplot=px.line(p4tc_sppt,width=1000,height=500,title=str(rsp)+' Rolling Contract C5TC Minus P5TC Size Spread Monthly Seasonality')
     spotplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
     spotplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
     spotplot['data'][-1]['line']['width']=5
@@ -686,7 +686,7 @@ elif freq_r=='Quarterly':
     rsp_chart=rsp_chart[rsp_chart['Year'].isin(yrsl)]
     p4tc_sppt=rsp_chart.pivot_table(index='Quarter',columns='Year',values=rsp_sp,aggfunc='mean')
 
-    spotplot=px.line(p4tc_sppt,width=1000,height=500,title=str(rsp)+' Rolling Contract C5TC Minus P4TC Size Spread Quarterly Seasonality')
+    spotplot=px.line(p4tc_sppt,width=1000,height=500,title=str(rsp)+' Rolling Contract C5TC Minus P5TC Size Spread Quarterly Seasonality')
     spotplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
     spotplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
     spotplot['data'][-1]['line']['width']=5
