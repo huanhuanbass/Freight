@@ -240,7 +240,7 @@ else:
     rangestart_r=date(1998,1,1)
 
 p4tc_sl=p4tc_sl[pd.to_datetime(p4tc_sl.index)>=pd.to_datetime(rangestart_r)]
-lplot=px.line(p4tc_sl,width=1000,height=500,title='P4TC Spot and Rolling Forward Contracts Historical Price')
+lplot=px.line(p4tc_sl,width=1000,height=500,title='P5TC Spot and Rolling Forward Contracts Historical Price')
 lplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 lplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
 lplot.update_traces(connectgaps=True)
