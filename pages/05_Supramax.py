@@ -594,7 +594,7 @@ st.plotly_chart(sspplot2)
 
 st.markdown('#### **----Rolling Contracts**')
 
-p4tc_roll.rename(columns={'P4TC':'4TC_PSpot'},inplace=True)
+p4tc_roll.rename(columns={'P5TC':'5TC_PSpot'},inplace=True)
 s10tc_roll.rename(columns={'S10TC':'10TC_SSpot'},inplace=True)
 
 rsp_opt=pd.Series(s10tc_roll.columns.values)
@@ -606,7 +606,7 @@ rsp_opt=rsp_opt.str.removeprefix('10TC_S')
 rsp=st.selectbox('Choose Contract',options=['+1MON']+list(rsp_opt),key='301')
 
 rsp_s='10TC_S'+rsp
-rsp_p='4TC_P'+rsp
+rsp_p='5TC_P'+rsp
 rsp_sp=rsp+' Spread'
 
 rsp_chart=pd.merge(s10tc_roll[rsp_s],p4tc_roll[rsp_p],left_index=True,right_index=True,how='inner')
