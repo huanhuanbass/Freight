@@ -149,7 +149,7 @@ m2=pd.concat([mtd,mrest2])
 m2['Implied FFA']=impffa
 mchart2=m2[['P5TC','Estimated Spot Left','Implied FFA','Simulation']]
 
-lplot2=px.line(mchart2,width=1000,height=500,title='P4TC Current Month Extrapolation: From Spot to FFA')
+lplot2=px.line(mchart2,width=1000,height=500,title='P5TC Current Month Extrapolation: From Spot to FFA')
 lplot2.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 lplot2.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
 lplot2.update_layout(template=draft_template)
