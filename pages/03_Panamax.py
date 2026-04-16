@@ -40,7 +40,7 @@ plot_title_font_size=25
 plot_legend_font_size=15
 plot_axis=dict(tickfont = dict(size=15))
 
-st.title('Baltic Exchange Panamax 4TC')
+st.title('Baltic Exchange Panamax 5TC')
 st.text('Dry Bulk Freight (Panamax) Interactive Dashboard')
 
 
@@ -652,7 +652,7 @@ if freq_r=='Weekly':
     rsp_chart=rsp_chart[rsp_chart['Year'].isin(yrsl)]
     p4tc_sppt=rsp_chart.pivot_table(index='Week',columns='Year',values=rsp_sp,aggfunc='mean')
 
-    spotplot=px.line(p4tc_sppt,width=1000,height=500,title=str(rsp)+' Rolling Contract C5TC Minus P4TC Size Spread Weekly Seasonality')
+    spotplot=px.line(p4tc_sppt,width=1000,height=500,title=str(rsp)+' Rolling Contract C5TC Minus P5TC Size Spread Weekly Seasonality')
     spotplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
     spotplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
     spotplot['data'][-1]['line']['width']=5
