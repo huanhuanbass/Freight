@@ -214,7 +214,7 @@ def load_pmxroute_data():
     df=pd.DataFrame(response.json())  
     spotpmx=pd.DataFrame(df.loc[0,'data'])
     spotpmx.set_index('date',inplace=True)
-    spotpmx.rename(columns={'value':'P4TC'},inplace=True)
+    spotpmx.rename(columns={'value':'P5TC'},inplace=True)
 
     response = requests.get(urlpmxroute, headers=headers,params=params)
     df=pd.DataFrame(response.json())
