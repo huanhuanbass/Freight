@@ -545,7 +545,7 @@ p4tc_pt.index=p4tc_pt.index.date
 
 
 
-p4tc_pt.rename(columns={'P4TC':'Spot'},inplace=True)
+p4tc_pt.rename(columns={'P5TC':'Spot'},inplace=True)
 s10tc_pt.rename(columns={'S10TC':'Spot'},inplace=True)
 
 
@@ -586,7 +586,7 @@ for j in ssp2:
     ssp_mg2.dropna(inplace=True)
     ssp_chart2=pd.merge(ssp_chart2,ssp_mg2[[str(j)+' Size Spread']],left_index=True,right_index=True,how='outer')
 
-sspplot2=px.line(ssp_chart2,width=1000,height=500,title='Fixed Contract Size Spread: P4TC minus S10TC')
+sspplot2=px.line(ssp_chart2,width=1000,height=500,title='Fixed Contract Size Spread: P5TC minus S10TC')
 sspplot2.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 sspplot2.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
 sspplot2.update_layout(template=draft_template)
@@ -613,7 +613,7 @@ rsp_chart=pd.merge(s10tc_roll[rsp_s],p4tc_roll[rsp_p],left_index=True,right_inde
 
 rsp_chart[rsp_sp]=rsp_chart[rsp_p]-rsp_chart[rsp_s]
 
-rspplot=px.line(rsp_chart[rsp_sp],width=1000,height=500,title=str(rsp)+' Rolling Contract Size Spread: P4TC Minus S10TC')
+rspplot=px.line(rsp_chart[rsp_sp],width=1000,height=500,title=str(rsp)+' Rolling Contract Size Spread: P5TC Minus S10TC')
 rspplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
 rspplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
 rspplot.update_layout(template=draft_template)
@@ -633,7 +633,7 @@ if freq_r=='Weekly':
     rsp_chart=rsp_chart[rsp_chart['Year'].isin(yrsl)]
     p4tc_sppt=rsp_chart.pivot_table(index='Week',columns='Year',values=rsp_sp,aggfunc='mean')
 
-    spotplot=px.line(p4tc_sppt,width=1000,height=500,title=str(rsp)+' Rolling Contract P4TC Minus S10TC Size Spread Weekly Seasonality')
+    spotplot=px.line(p4tc_sppt,width=1000,height=500,title=str(rsp)+' Rolling Contract P5TC Minus S10TC Size Spread Weekly Seasonality')
     spotplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
     spotplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
     spotplot['data'][-1]['line']['width']=5
@@ -650,7 +650,7 @@ elif freq_r=='Monthly':
     rsp_chart=rsp_chart[rsp_chart['Year'].isin(yrsl)]
     p4tc_sppt=rsp_chart.pivot_table(index='Month',columns='Year',values=rsp_sp,aggfunc='mean')
 
-    spotplot=px.line(p4tc_sppt,width=1000,height=500,title=str(rsp)+' Rolling Contract P4TC Minus S10TC Size Spread Monthly Seasonality')
+    spotplot=px.line(p4tc_sppt,width=1000,height=500,title=str(rsp)+' Rolling Contract P5TC Minus S10TC Size Spread Monthly Seasonality')
     spotplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
     spotplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
     spotplot['data'][-1]['line']['width']=5
@@ -667,7 +667,7 @@ elif freq_r=='Quarterly':
     rsp_chart=rsp_chart[rsp_chart['Year'].isin(yrsl)]
     p4tc_sppt=rsp_chart.pivot_table(index='Quarter',columns='Year',values=rsp_sp,aggfunc='mean')
 
-    spotplot=px.line(p4tc_sppt,width=1000,height=500,title=str(rsp)+' Rolling Contract P4TC Minus S10TC Size Spread Quarterly Seasonality')
+    spotplot=px.line(p4tc_sppt,width=1000,height=500,title=str(rsp)+' Rolling Contract P5TC Minus S10TC Size Spread Quarterly Seasonality')
     spotplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
     spotplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
     spotplot['data'][-1]['line']['width']=5
