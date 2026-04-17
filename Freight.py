@@ -518,6 +518,7 @@ def load_pmx_ffa_data():
     p4tc.set_index('Date',inplace=True)
 
     st.text('FFA Data After Update: '+str(p4tc.index.date[-1]))
+    st.write(p4tc)
 
     p4tc.to_csv('p5tc.csv',index_label='Date')
 
