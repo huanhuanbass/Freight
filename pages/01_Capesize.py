@@ -184,6 +184,64 @@ if rtr1!=rtr2:
     tspplot.update_layout(template=draft_template)
     st.plotly_chart(tspplot)
 
+
+freq_rt=st.radio('Select Frequency',options=['Weekly','Monthly','Quarterly'],key='freq_rt')
+if freq_rt=='Weekly':
+    rtr['Year']=rtr.index.year
+    rtr['Week']=rtr.index.isocalendar().week
+    rtr.loc[rtr[rtr.index.date==date(2016,1,2)].index,'Week']=0
+    rtr.loc[rtr[rtr.index.date==date(2021,1,2)].index,'Week']=0
+    rtr.loc[rtr[rtr.index.date==date(2022,1,1)].index,'Week']=0
+    yrlist=list(rtr['Year'].unique())
+    yrlist.sort(reverse=True)
+    yrsl=st.multiselect('Select Years',options=yrlist,default=np.arange(curryear-4,curryear+1),key='spotyear11rtr')
+    rtr=rtr[rtr['Year'].isin(yrsl)]
+    rtr_pt=rtr.pivot_table(index='Week',columns='Year',values='Ratio',aggfunc='mean')
+
+    spotplot=px.line(rtr_pt,width=1000,height=500,title='Route Ratio Weekly Seasonality '+str(rtr1)+' over '+str(rtr2))
+    spotplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
+    spotplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+    spotplot['data'][-1]['line']['width']=5
+    spotplot['data'][-1]['line']['color']='black'
+    spotplot.update_layout(template=draft_template)
+    st.plotly_chart(spotplot)
+
+elif freq_rt=='Monthly':
+    rtr['Year']=rtr.index.year
+    rtr['Month']=rtr.index.month
+    yrlist=list(rtr['Year'].unique())
+    yrlist.sort(reverse=True)
+    yrsl=st.multiselect('Select Years',options=yrlist,default=np.arange(curryear-4,curryear+1),key='spotyear22rtr')
+    rtr=rtr[rtr['Year'].isin(yrsl)]
+    rtr_pt=rtr.pivot_table(index='Month',columns='Year',values='Ratio',aggfunc='mean')
+
+    spotplot=px.line(rtr_pt,width=1000,height=500,title='Route Ratio Monthly Seasonality '+str(rtr1)+' over '+str(rtr2))
+    spotplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
+    spotplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+    spotplot['data'][-1]['line']['width']=5
+    spotplot['data'][-1]['line']['color']='black'
+    spotplot.update_layout(template=draft_template)
+    st.plotly_chart(spotplot)
+
+elif freq_rt=='Quarterly':
+    rtr['Year']=rtr.index.year
+    rtr['Quarter']=rtr.index.quarter
+    yrlist=list(rtr['Year'].unique())
+    yrlist.sort(reverse=True)
+    yrsl=st.multiselect('Select Years',options=yrlist,default=np.arange(curryear-4,curryear),key='spotyear33rtr')
+    rtr=rtr[rtr['Year'].isin(yrsl)]
+    rtr_pt=rtr.pivot_table(index='Quarter',columns='Year',values='Ratio',aggfunc='mean')
+
+    spotplot=px.line(rtr_pt,width=1000,height=500,title='Route Ratio Quarterly Seasonality '+str(rtr1)+' over '+str(rtr2))
+    spotplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
+    spotplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+    spotplot['data'][-1]['line']['width']=5
+    spotplot['data'][-1]['line']['color']='black'
+    spotplot.update_layout(template=draft_template)
+    st.plotly_chart(spotplot)
+
+
+
 st.markdown('#### **----Spread of Routes**')
 
 rtsp1=st.selectbox('Select Route 1',options=['C3']+list(route.columns),key='882')
@@ -198,6 +256,61 @@ if rtsp1!=rtsp2:
     tspplot.update_layout(template=draft_template)
     st.plotly_chart(tspplot)
 
+
+freq_rt=st.radio('Select Frequency',options=['Weekly','Monthly','Quarterly'],key='freq_sp')
+if freq_rt=='Weekly':
+    rtsp['Year']=rtsp.index.year
+    rtsp['Week']=rtsp.index.isocalendar().week
+    rtsp.loc[rtsp[rtsp.index.date==date(2016,1,2)].index,'Week']=0
+    rtsp.loc[rtsp[rtsp.index.date==date(2021,1,2)].index,'Week']=0
+    rtsp.loc[rtsp[rtsp.index.date==date(2022,1,1)].index,'Week']=0
+    yrlist=list(rtsp['Year'].unique())
+    yrlist.sort(reverse=True)
+    yrsl=st.multiselect('Select Years',options=yrlist,default=np.arange(curryear-4,curryear+1),key='spotyear11rtsp')
+    rtsp=rtsp[rtsp['Year'].isin(yrsl)]
+    rtsp_pt=rtsp.pivot_table(index='Week',columns='Year',values='Spread',aggfunc='mean')
+
+    spotplot=px.line(rtsp_pt,width=1000,height=500,title='Route Spread Weekly Seasonality '+str(rtsp1)+' minus '+str(rtsp2))
+    spotplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
+    spotplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+    spotplot['data'][-1]['line']['width']=5
+    spotplot['data'][-1]['line']['color']='black'
+    spotplot.update_layout(template=draft_template)
+    st.plotly_chart(spotplot)
+
+elif freq_rt=='Monthly':
+    rtsp['Year']=rtsp.index.year
+    rtsp['Month']=rtsp.index.month
+    yrlist=list(rtsp['Year'].unique())
+    yrlist.sort(reverse=True)
+    yrsl=st.multiselect('Select Years',options=yrlist,default=np.arange(curryear-4,curryear+1),key='spotyear22rtsp')
+    rtsp=rtsp[rtsp['Year'].isin(yrsl)]
+    rtsp_pt=rtsp.pivot_table(index='Month',columns='Year',values='Spread',aggfunc='mean')
+
+    spotplot=px.line(rtsp_pt,width=1000,height=500,title='Route Spread Monthly Seasonality '+str(rtsp1)+' minus '+str(rtsp2))
+    spotplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
+    spotplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+    spotplot['data'][-1]['line']['width']=5
+    spotplot['data'][-1]['line']['color']='black'
+    spotplot.update_layout(template=draft_template)
+    st.plotly_chart(spotplot)
+
+elif freq_rt=='Quarterly':
+    rtsp['Year']=rtsp.index.year
+    rtsp['Quarter']=rtsp.index.quarter
+    yrlist=list(rtsp['Year'].unique())
+    yrlist.sort(reverse=True)
+    yrsl=st.multiselect('Select Years',options=yrlist,default=np.arange(curryear-4,curryear),key='spotyear33rtsp')
+    rtsp=rtsp[rtsp['Year'].isin(yrsl)]
+    rtsp_pt=rtsp.pivot_table(index='Quarter',columns='Year',values='Spread',aggfunc='mean')
+
+    spotplot=px.line(rtsp_pt,width=1000,height=500,title='Route Spread Quarterly Seasonality '+str(rtsp1)+' minus '+str(rtsp2))
+    spotplot.update_xaxes(ticks=plot_ticks, tickwidth=plot_tickwidth,  ticklen=plot_ticklen)
+    spotplot.update_layout(title_font_color=plot_title_font_color,title_font_size=plot_title_font_size,legend_font_size=plot_legend_font_size,xaxis=plot_axis,yaxis=plot_axis)
+    spotplot['data'][-1]['line']['width']=5
+    spotplot['data'][-1]['line']['color']='black'
+    spotplot.update_layout(template=draft_template)
+    st.plotly_chart(spotplot)
 
 
 st.markdown('## **Spot and Forward Contracts Line Chart**')
