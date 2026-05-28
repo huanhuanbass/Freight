@@ -42,24 +42,28 @@ def load_spot_data():
     spotcape=pd.DataFrame(df.loc[0,'data'])
     spotcape.set_index('date',inplace=True)
     spotcape.rename(columns={'value':'C5TC'},inplace=True)
+    spotcape=spotcape[['C5TC']]
 
     response = requests.get(urlpmx, headers=headers,params=params)
     df=pd.DataFrame(response.json())
     spotpmx=pd.DataFrame(df.loc[0,'data'])
     spotpmx.set_index('date',inplace=True)
     spotpmx.rename(columns={'value':'P5TC'},inplace=True)
+    spotpmx=spotpmx[['P5TC']]
 
     response = requests.get(urlsmx, headers=headers,params=params)
     df=pd.DataFrame(response.json())
     spotsmx=pd.DataFrame(df.loc[0,'data'])
     spotsmx.set_index('date',inplace=True)
     spotsmx.rename(columns={'value':'S10TC'},inplace=True)
+    spotsmx=spotsmx[['S10TC']]
 
     response = requests.get(urlhandy, headers=headers,params=params)
     df=pd.DataFrame(response.json())
     spothandy=pd.DataFrame(df.loc[0,'data'])
     spothandy.set_index('date',inplace=True)
     spothandy.rename(columns={'value':'HS7TC'},inplace=True)
+    spothandy=spothandy[['HS7TC']]
 
     spotnew=pd.merge(spotcape,spotpmx,left_index=True,right_index=True,how='outer')
     spotnew=pd.merge(spotnew,spotsmx,left_index=True,right_index=True,how='outer')
@@ -128,42 +132,52 @@ def load_caperoute_data():
     spotc2=pd.DataFrame(df.loc[0,'data'])
     spotc2.set_index('date',inplace=True)
     spotc2.rename(columns={'value':'C2'},inplace=True)
+    spotc2=spotc2[['C2']]
 
     spotc3=pd.DataFrame(df.loc[1,'data'])
     spotc3.set_index('date',inplace=True)
     spotc3.rename(columns={'value':'C3'},inplace=True)
+    spotc3=spotc3[['C3']]
 
     spotc5=pd.DataFrame(df.loc[2,'data'])
     spotc5.set_index('date',inplace=True)
     spotc5.rename(columns={'value':'C5'},inplace=True)
+    spotc5=spotc5[['C5']]
 
     spotc7=pd.DataFrame(df.loc[3,'data'])
     spotc7.set_index('date',inplace=True)
     spotc7.rename(columns={'value':'C7'},inplace=True)
+    spotc7=spotc7[['C7']]
 
     spotc8=pd.DataFrame(df.loc[4,'data'])
     spotc8.set_index('date',inplace=True)
     spotc8.rename(columns={'value':'C8'},inplace=True)
+    spotc8=spotc8[['C8']]
 
     spotc9=pd.DataFrame(df.loc[5,'data'])
     spotc9.set_index('date',inplace=True)
     spotc9.rename(columns={'value':'C9'},inplace=True)
+    spotc9=spotc9[['C9']]
 
     spotc10=pd.DataFrame(df.loc[6,'data'])
     spotc10.set_index('date',inplace=True)
     spotc10.rename(columns={'value':'C10'},inplace=True)
+    spotc10=spotc10[['C10']]
 
     spotc14=pd.DataFrame(df.loc[7,'data'])
     spotc14.set_index('date',inplace=True)
     spotc14.rename(columns={'value':'C14'},inplace=True)
+    spotc14=spotc14[['C14']]
 
     spotc16=pd.DataFrame(df.loc[8,'data'])
     spotc16.set_index('date',inplace=True)
     spotc16.rename(columns={'value':'C16'},inplace=True)
+    spotc16=spotc16[['C16']]
 
     spotc17=pd.DataFrame(df.loc[9,'data'])
     spotc17.set_index('date',inplace=True)
     spotc17.rename(columns={'value':'C17'},inplace=True)
+    spotc17=spotc17[['C17']]
 
     spotnew=pd.merge(spotcape,spotc2,left_index=True,right_index=True,how='outer')
     spotnew=pd.merge(spotnew,spotc3,left_index=True,right_index=True,how='outer')
@@ -222,34 +236,42 @@ def load_pmxroute_data():
     spotp1a=pd.DataFrame(df.loc[0,'data'])
     spotp1a.set_index('date',inplace=True)
     spotp1a.rename(columns={'value':'P1A'},inplace=True)
+    spotp1a=spotp1a[['P1A']]
 
     spotp2a=pd.DataFrame(df.loc[1,'data'])
     spotp2a.set_index('date',inplace=True)
     spotp2a.rename(columns={'value':'P2A'},inplace=True)
+    spotp2a=spotp2a[['P2A']]
 
     spotp3a=pd.DataFrame(df.loc[2,'data'])
     spotp3a.set_index('date',inplace=True)
     spotp3a.rename(columns={'value':'P3A'},inplace=True)
+    spotp3a=spotp3a[['P3A']]
 
     spotp4=pd.DataFrame(df.loc[3,'data'])
     spotp4.set_index('date',inplace=True)
     spotp4.rename(columns={'value':'P4'},inplace=True)
+    spotp4=spotp4[['P4']]
 
     spotp5=pd.DataFrame(df.loc[4,'data'])
     spotp5.set_index('date',inplace=True)
     spotp5.rename(columns={'value':'P5'},inplace=True)
+    spotp5=spotp5[['P5']]
 
     spotp6=pd.DataFrame(df.loc[5,'data'])
     spotp6.set_index('date',inplace=True)
     spotp6.rename(columns={'value':'P6'},inplace=True)
+    spotp6=spotp6[['P6']]
 
     spotp7=pd.DataFrame(df.loc[6,'data'])
     spotp7.set_index('date',inplace=True)
     spotp7.rename(columns={'value':'P7'},inplace=True)
+    spotp7=spotp7[['P7']]
 
     spotp8=pd.DataFrame(df.loc[7,'data'])
     spotp8.set_index('date',inplace=True)
     spotp8.rename(columns={'value':'P8'},inplace=True)
+    spotp8=spotp8[['P8']]
 
     spotnew=pd.merge(spotpmx,spotp1a,left_index=True,right_index=True,how='outer')
     spotnew=pd.merge(spotnew,spotp2a,left_index=True,right_index=True,how='outer')
@@ -314,46 +336,57 @@ def load_smxroute_data():
     spots1b=pd.DataFrame(df.loc[0,'data'])
     spots1b.set_index('date',inplace=True)
     spots1b.rename(columns={'value':'S1B'},inplace=True)
+    spots1b=spots1b[['S1B']]
 
     spots1c=pd.DataFrame(df.loc[1,'data'])
     spots1c.set_index('date',inplace=True)
     spots1c.rename(columns={'value':'S1C'},inplace=True)
+    spots1c=spots1c[['S1C']]
 
     spots2=pd.DataFrame(df.loc[2,'data'])
     spots2.set_index('date',inplace=True)
     spots2.rename(columns={'value':'S2'},inplace=True)
+    spots2=spots2[['S2']]
 
     spots3=pd.DataFrame(df.loc[3,'data'])
     spots3.set_index('date',inplace=True)
     spots3.rename(columns={'value':'S3'},inplace=True)
+    spots3=spots3[['S3']]
 
     spots4a=pd.DataFrame(df.loc[4,'data'])
     spots4a.set_index('date',inplace=True)
     spots4a.rename(columns={'value':'S4A'},inplace=True)
+    spots4a=spots4a[['S4A']]
 
     spots4b=pd.DataFrame(df.loc[5,'data'])
     spots4b.set_index('date',inplace=True)
     spots4b.rename(columns={'value':'S4B'},inplace=True)
+    spots4b=spots4b[['S4B']]
 
     spots5=pd.DataFrame(df.loc[6,'data'])
     spots5.set_index('date',inplace=True)
     spots5.rename(columns={'value':'S5'},inplace=True)
+    spots5=spots5[['S5']]
 
     spots8=pd.DataFrame(df.loc[7,'data'])
     spots8.set_index('date',inplace=True)
     spots8.rename(columns={'value':'S8'},inplace=True)
+    spots8=spots8[['S8']]
 
     spots9=pd.DataFrame(df.loc[8,'data'])
     spots9.set_index('date',inplace=True)
     spots9.rename(columns={'value':'S9'},inplace=True)
+    spots9=spots9[['S9']]
 
     spots10=pd.DataFrame(df.loc[9,'data'])
     spots10.set_index('date',inplace=True)
     spots10.rename(columns={'value':'S10'},inplace=True)
+    spots10=spots10[['S10']]
 
     spots15=pd.DataFrame(df.loc[10,'data'])
     spots15.set_index('date',inplace=True)
     spots15.rename(columns={'value':'S15'},inplace=True)
+    spots15=spots15[['S15']]
 
     spotnew=pd.merge(spotsmx,spots1b,left_index=True,right_index=True,how='outer')
     spotnew=pd.merge(spotnew,spots1c,left_index=True,right_index=True,how='outer')
@@ -415,30 +448,37 @@ def load_handyroute_data():
     spoths1=pd.DataFrame(df.loc[0,'data'])
     spoths1.set_index('date',inplace=True)
     spoths1.rename(columns={'value':'HS1'},inplace=True)
+    spoths1=spoths1[['HS1']]
 
     spoths2=pd.DataFrame(df.loc[1,'data'])
     spoths2.set_index('date',inplace=True)
     spoths2.rename(columns={'value':'HS2'},inplace=True)
+    spoths2=spoths2[['HS2']]
 
     spoths3=pd.DataFrame(df.loc[2,'data'])
     spoths3.set_index('date',inplace=True)
     spoths3.rename(columns={'value':'HS3'},inplace=True)
+    spoths3=spoths3[['HS3']]
 
     spoths4=pd.DataFrame(df.loc[3,'data'])
     spoths4.set_index('date',inplace=True)
     spoths4.rename(columns={'value':'HS4'},inplace=True)
+    spoths4=spoths4[['HS4']]
 
     spoths5=pd.DataFrame(df.loc[4,'data'])
     spoths5.set_index('date',inplace=True)
     spoths5.rename(columns={'value':'HS5'},inplace=True)
+    spoths5=spoths5[['HS5']]
 
     spoths6=pd.DataFrame(df.loc[5,'data'])
     spoths6.set_index('date',inplace=True)
     spoths6.rename(columns={'value':'HS6'},inplace=True)
+    spoths6=spoths6[['HS6']]
 
     spoths7=pd.DataFrame(df.loc[6,'data'])
     spoths7.set_index('date',inplace=True)
     spoths7.rename(columns={'value':'HS7'},inplace=True)
+    spoths7=spoths7[['HS7']]
 
 
     spotnew=pd.merge(spothandy,spoths1,left_index=True,right_index=True,how='outer')
